@@ -1,0 +1,21 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>local_hospital</mat-icon>
+  </button>
+  <span>{{title}}</span>
+  <div class="menu-buttons">
+    <button mat-button [matMenuTriggerFor]="menu">Admin</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/lookup-lists">Lookup Lists</button>
+      <button mat-menu-item>Shortcodes</button>
+    </mat-menu>
+  </div>
+  <span class="spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>
+<router-outlet></router-outlet>
