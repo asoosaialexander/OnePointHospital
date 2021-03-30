@@ -1,0 +1,5 @@
+hr.patient.admin@hospitalrun.io
+HRt3st12
+
+postgres
+password

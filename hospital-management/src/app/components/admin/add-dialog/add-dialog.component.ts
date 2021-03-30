@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Lookup } from '../lookup-lists/lookup-lists.component';
+import { Lookup } from 'src/app/shared/lookup';
 
 @Component({
   selector: 'app-add-dialog',

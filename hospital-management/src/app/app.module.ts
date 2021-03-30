@@ -7,20 +7,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { LookupListsComponent } from './components/admin/lookup-lists/lookup-lists.component';
 import { AddDialogComponent } from './components/admin/add-dialog/add-dialog.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LookupListsComponent,
-    AddDialogComponent
+    AddDialogComponent,
+    DynamicFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

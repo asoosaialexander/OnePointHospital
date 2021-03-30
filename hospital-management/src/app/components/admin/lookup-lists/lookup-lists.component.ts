@@ -1,18 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
+import { LookupService } from 'src/app/services/lookup.service';
+import { Lookup, LookupType } from 'src/app/shared/lookup';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
-
-export interface Lookup {
-  id: number;
-  value: string;
-}
-
-const LOOKUP_DATA: Lookup[] = [
-  { id: 1, value: "India" },
-  { id: 2, value: "Iran" },
-  { id: 3, value: "Srilanka" },
-  { id: 4, value: "United Arab Emirates" }
-];
 
 @Component({
   selector: 'app-lookup-lists',
@@ -22,22 +14,61 @@ const LOOKUP_DATA: Lookup[] = [
 export class LookupListsComponent implements OnInit {
 
   displayedColumns: string[] = ["value", "actions"];
-  dataSource = LOOKUP_DATA;
-  newEntry: Lookup = { id: 0, value: "" };
+  lookupTypeData: LookupType[] = [];
+  dataSource: MatTableDataSource<Lookup>;;
+  selectedId: number = 0;
+  title: string = "";
+  newEntry: Lookup = { id: 0, value: "", typeId: 0 };
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    private lookupService: LookupService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
+    this.dataSource = new MatTableDataSource();
+  }
 
   ngOnInit(): void {
+    this.getLookupTypes();
+  }
+
+  getLookupTypes() {
+    this.lookupService.getLookupTypes().subscribe(
+      data => {
+        this.lookupTypeData = data;
+      }
+    );
+  }
+
+  getLookupData(typeId: number) {
+    this.lookupService.getLookupById(typeId).subscribe(
+      data => this.dataSource.data = data
+    );
+  }
+
+  onLookupTypeChange(id: number) {
+    var selected = this.lookupTypeData.map(item => {
+      if (item.id == id) {
+        this.selectedId = item.id;
+        this.title = item.name
+      }
+    });
+
+    this.getLookupData(id);
   }
 
   addEntry(): void {
     const dialogRef = this.dialog.open(AddDialogComponent, {
       width: '250px',
-      data: this.newEntry
+      data: { ...this.newEntry, typeId: this.selectedId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      LOOKUP_DATA.push(result);
+      if (result != undefined) {
+        this.lookupService.addLookupEntry(result).subscribe(() => {
+          this.getLookupData(this.selectedId);
+        });
+      }
     });
   }
 
@@ -48,14 +79,24 @@ export class LookupListsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      LOOKUP_DATA.push(result);
+      if (result != undefined) {
+        this.lookupService.updateLookupEntry(result).subscribe();
+      }
     });
   }
 
   deleteEntry(entry: Lookup): void {
-    const index = LOOKUP_DATA.indexOf(entry);
-    if (index > -1) {
-      LOOKUP_DATA.splice(index, 1);
-    }
+    this.lookupService.deleteEntry(entry.id).subscribe(() => {
+      this.getLookupData(this.selectedId);
+      this.openSnackBar("Deleted successfully")
+    });
+
   }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, "Ok", {
+      duration: 2000,
+    });
+  }
+
 }
