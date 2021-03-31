@@ -1,6 +1,6 @@
 using System;
 
-namespace hospital_management_api
+namespace hospital_management_api.Models
 {
     public class Lookup
     {

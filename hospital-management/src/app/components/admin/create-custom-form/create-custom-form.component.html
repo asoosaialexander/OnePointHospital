@@ -1,0 +1,68 @@
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Add Custom Form
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Form Name</mat-label>
+        <input matInput required [value]="editForm.name">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Form Type</mat-label>
+        <mat-select required [(value)]="editForm.type">
+          <mat-option *ngFor="let formType of formTypes" [value]="formType.value">
+            {{formType.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Columns</mat-label>
+        <input matInput type="number" min=1 max="4" required [value]="editForm.columns">
+      </mat-form-field>
+      <mat-checkbox [checked]="editForm.alwaysInclude">
+        Always Include
+      </mat-checkbox>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Fields
+            <button mat-button color="primary" (click)="addField()">
+              <mat-icon>add_box</mat-icon>Add Field
+            </button>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="label">
+              <th mat-header-cell *matHeaderCellDef> Label </th>
+              <td mat-cell *matCellDef="let entry"> {{entry.label}} </td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef> Type </th>
+              <td mat-cell *matCellDef="let entry"> {{entry.type}} </td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let entry">
+                <div class="button-row">
+                  <button mat-stroked-button color="primary" (click)="editField(entry)">Edit</button>
+                  <button mat-stroked-button color="warn" (click)="deleteField(entry)">Delete</button>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="warn" (click)="cancelChanges()">Cancel</button>
+      <button mat-raised-button color="primary">Update</button>
+    </mat-card-actions>
+  </mat-card>
+
+</div>

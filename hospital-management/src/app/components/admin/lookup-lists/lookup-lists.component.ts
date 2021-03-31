@@ -15,7 +15,7 @@ export class LookupListsComponent implements OnInit {
 
   displayedColumns: string[] = ["value", "actions"];
   lookupTypeData: LookupType[] = [];
-  dataSource: MatTableDataSource<Lookup>;;
+  dataSource: MatTableDataSource<Lookup>;
   selectedId: number = 0;
   title: string = "";
   newEntry: Lookup = { id: 0, value: "", typeId: 0 };

@@ -12,7 +12,7 @@ import { QuestionBase } from 'src/app/shared/question-base';
 
 export class DynamicFormComponent implements OnInit {
 
-  questions!: QuestionBase<string>[];
+  questions!: QuestionBase[];
   form!: FormGroup;
   payLoad = '';
 
@@ -30,7 +30,7 @@ export class DynamicFormComponent implements OnInit {
     this.payLoad = JSON.stringify(this.form.getRawValue());
   }
 
-  toFormGroup(questions: QuestionBase<string>[]) {
+  toFormGroup(questions: QuestionBase[]) {
     const group: any = {};
 
     questions.forEach(question => {

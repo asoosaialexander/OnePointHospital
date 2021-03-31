@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Add Value</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Type</mat-label>
+    <mat-select [(ngModel)]="data.type" required>
+      <mat-option value="Checkbox">Checkbox</mat-option>
+      <mat-option value="Dropdown">Dropdown</mat-option>
+      <mat-option value="Large Text">Large Text</mat-option>
+      <mat-option value="Radio">Radio</mat-option>
+      <mat-option value="Text">Text</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Label</mat-label>
+    <input matInput [(ngModel)]="data.label">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>No of columns to span</mat-label>
+    <input matInput [(ngModel)]="data.colspan">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

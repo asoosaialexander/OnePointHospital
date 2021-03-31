@@ -18,7 +18,6 @@
     </mat-card-header>
     <mat-card-content>
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <!-- Name Column -->
         <ng-container matColumnDef="value">
           <th mat-header-cell *matHeaderCellDef> Value </th>
           <td mat-cell *matCellDef="let entry"> {{entry.value}} </td>

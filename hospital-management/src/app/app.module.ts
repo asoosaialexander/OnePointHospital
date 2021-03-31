@@ -9,14 +9,20 @@ import { LookupListsComponent } from './components/admin/lookup-lists/lookup-lis
 import { AddDialogComponent } from './components/admin/add-dialog/add-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { DynamicFormComponent } from './components/admin/dynamic-form/dynamic-form.component';
+import { CreateCustomFormComponent } from './components/admin/create-custom-form/create-custom-form.component';
+import { ViewCustomFormComponent } from './components/admin/view-custom-form/view-custom-form.component';
+import { EditFieldDialogComponent } from './components/admin/edit-field-dialog/edit-field-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LookupListsComponent,
     AddDialogComponent,
-    DynamicFormComponent
+    DynamicFormComponent,
+    CreateCustomFormComponent,
+    ViewCustomFormComponent,
+    EditFieldDialogComponent
   ],
   imports: [
     BrowserModule,
