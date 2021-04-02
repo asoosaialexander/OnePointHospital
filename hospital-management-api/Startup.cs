@@ -13,6 +13,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using hospital_management_api.Data;
 using Microsoft.AspNetCore.Http.Features;
+using hospital_management_api.Models.MongoDB;
+using Microsoft.Extensions.Options;
+using hospital_management_api.Services;
+using MongoDB.Bson.Serialization.Conventions;
 
 namespace hospital_management_api
 {
@@ -43,6 +47,17 @@ namespace hospital_management_api
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
             );
 
+            var camelCaseConvention = new ConventionPack { new CamelCaseElementNameConvention() };
+            ConventionRegistry.Register("CamelCase", camelCaseConvention, type => true);
+
+
+            //Injecting MongoDB settings
+            services.Configure<MongoDBDatabaseSettings>(
+                Configuration.GetSection(nameof(MongoDBDatabaseSettings)));
+
+            services.AddSingleton<IOnePointHospitalDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<MongoDBDatabaseSettings>>().Value);
+
             services.Configure<FormOptions>(options =>
             {
                 options.ValueLengthLimit = int.MaxValue;
@@ -50,6 +65,7 @@ namespace hospital_management_api
                 options.MemoryBufferThreshold = int.MaxValue;
             });
 
+            services.AddSingleton<CustomFormService>();
             services.AddControllers();
         }
 

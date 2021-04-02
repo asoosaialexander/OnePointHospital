@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { QuestionBase } from 'src/app/shared/question-base';
+import { MatTableDataSource } from '@angular/material/table';
+import { FieldOption, QuestionBase } from 'src/app/shared/question-base';
 
 @Component({
   selector: 'app-edit-field-dialog',
@@ -9,15 +10,50 @@ import { QuestionBase } from 'src/app/shared/question-base';
 })
 export class EditFieldDialogComponent implements OnInit {
 
+  dataSource!: MatTableDataSource<FieldOption>;
+  displayedColumns: string[] = ["value", "actions"];
+
   constructor(
     public dialogRef: MatDialogRef<EditFieldDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: QuestionBase) { }
+    @Inject(MAT_DIALOG_DATA) public data: QuestionBase
+  ) {
+    this.dataSource = new MatTableDataSource();
+    this.dataSource.data = data.options;
+  }
 
   ngOnInit(): void {
   }
 
+  addValue() {
+    var data = this.dataSource.data;
+    data.push(new FieldOption());
+    this.dataSource.data = data;
+  }
+
+  deleteValue(value: string) {
+    var data = this.dataSource.data;
+    let index = 0;
+    data.forEach((item, i) => {
+      if (item.value == value) {
+        index = i;
+      }
+    });
+    data.splice(index, 1);
+    this.dataSource.data = data;
+  }
+
   onCancel(): void {
     this.dialogRef.close();
+  }
+
+  onOk(): void {
+    if(!this.data.value){
+      this.data.value=this.data.label;
+    }
+    this.data.options = this.dataSource.data;
+    this.data.options.forEach(option=>{
+      option.key = option.value
+    });
   }
 
 }

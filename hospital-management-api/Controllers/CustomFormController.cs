@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using hospital_management_api.Data;
 using hospital_management_api.Models;
+using hospital_management_api.Services;
+using hospital_management_api.Models.MongoDB;
 
 namespace hospital_management_api.Controllers
 {
@@ -14,98 +16,66 @@ namespace hospital_management_api.Controllers
     [ApiController]
     public class CustomFormController : ControllerBase
     {
-        private readonly HospitalManagementContext _context;
+        private readonly CustomFormService _customFormService;
 
-        public CustomFormController(HospitalManagementContext context)
+        public CustomFormController(CustomFormService customFormService)
         {
-            _context = context;
+            _customFormService = customFormService;
         }
 
-        // GET: api/CustomForm
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CustomForm>>> GetCustomForms()
-        {
-            return await _context.CustomForms.ToListAsync();
-        }
+        public ActionResult<List<CustomForm>> Get() =>
+            _customFormService.Get();
 
-        // GET: api/CustomForm/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CustomForm>> GetCustomForm(int id)
+        [HttpGet("{id:length(24)}", Name = "GetCustomForm")]
+        public ActionResult<CustomForm> Get(string id)
         {
-            var customForm = await _context.CustomForms.FindAsync(id);
+            var customForm = _customFormService.Get(id);
 
             if (customForm == null)
             {
                 return NotFound();
             }
 
-            customForm.Fields = await _context.Question.Where(q => q.CustomFormId == id).ToListAsync();
             return customForm;
         }
 
-        // PUT: api/CustomForm/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomForm(int id, CustomForm customForm)
+        [HttpPost]
+        public ActionResult<CustomForm> Create(CustomForm customForm)
         {
-            if (id != customForm.Id)
+            _customFormService.Create(customForm);
+
+            return CreatedAtRoute("GetCustomForm", new { id = customForm.Id.ToString() }, customForm);
+        }
+
+        [HttpPut("{id:length(24)}")]
+        public IActionResult Update(string id, CustomForm customFormIn)
+        {
+            var customForm = _customFormService.Get(id);
+
+            if (customForm == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(customForm).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomFormExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _customFormService.Update(id, customFormIn);
 
             return NoContent();
         }
 
-        // POST: api/CustomForm
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<CustomForm>> PostCustomForm(CustomForm customForm)
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
         {
-            _context.CustomForms.Add(customForm);
-            await _context.SaveChangesAsync();
+            var customForm = _customFormService.Get(id);
 
-            return CreatedAtAction("GetCustomForm", new { id = customForm.Id }, customForm);
-        }
-
-        // DELETE: api/CustomForm/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<CustomForm>> DeleteCustomForm(int id)
-        {
-            var customForm = await _context.CustomForms.FindAsync(id);
             if (customForm == null)
             {
                 return NotFound();
             }
 
-            _context.CustomForms.Remove(customForm);
-            await _context.SaveChangesAsync();
+            _customFormService.Remove(customForm.Id);
 
-            return customForm;
-        }
-
-        private bool CustomFormExists(int id)
-        {
-            return _context.CustomForms.Any(e => e.Id == id);
+            return NoContent();
         }
     }
 }

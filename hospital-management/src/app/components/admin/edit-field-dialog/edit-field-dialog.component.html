@@ -1,8 +1,8 @@
 <h1 mat-dialog-title>Add Value</h1>
-<div mat-dialog-content>
+<div mat-dialog-content class="form-container">
   <mat-form-field appearance="fill">
     <mat-label>Type</mat-label>
-    <mat-select [(ngModel)]="data.type" required>
+    <mat-select [(ngModel)]="data.controlType" required>
       <mat-option value="Checkbox">Checkbox</mat-option>
       <mat-option value="Dropdown">Dropdown</mat-option>
       <mat-option value="Large Text">Large Text</mat-option>
@@ -10,16 +10,46 @@
       <mat-option value="Text">Text</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field appearance="fill">
     <mat-label>Label</mat-label>
-    <input matInput [(ngModel)]="data.label">
+    <input matInput [(ngModel)]="data.label" required>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field appearance="fill">
     <mat-label>No of columns to span</mat-label>
     <input matInput [(ngModel)]="data.colspan">
   </mat-form-field>
+  <mat-card *ngIf="data.controlType === 'Checkbox' || data.controlType === 'Dropdown' || data.controlType === 'Radio'">
+    <mat-card-header>
+      <mat-card-title>
+        Fields
+        <button mat-button color="primary" (click)="addValue()">
+          <mat-icon>add_box</mat-icon>Add Value
+        </button>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef> Value </th>
+          <td mat-cell *matCellDef="let entry">
+            <mat-form-field>
+              <input matInput [(ngModel)]="entry.value">
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let entry">
+            <button mat-stroked-button color="warn" (click)="deleteValue(entry.value)"><mat-icon>delete</mat-icon>Delete</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onOk()" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>

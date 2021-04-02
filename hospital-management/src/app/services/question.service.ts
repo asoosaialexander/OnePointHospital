@@ -10,18 +10,6 @@ export class QuestionService {
 
     const questions: QuestionBase[] = [
 
-      new DropdownQuestion({
-        key: 'brave',
-        label: 'Bravery Rating',
-        options: [
-          { key: 'solid', value: 'Solid' },
-          { key: 'great', value: 'Great' },
-          { key: 'good', value: 'Good' },
-          { key: 'unproven', value: 'Unproven' }
-        ],
-        order: 3
-      }),
-
       new TextboxQuestion({
         key: 'firstName',
         label: 'First name',

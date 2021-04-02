@@ -18,21 +18,19 @@ export class ViewCustomFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getForms();
+  }
+
+  getForms() {
     this.customFormService.getCustomForm().subscribe((data) => {
       this.dataSource.data = data;
     })
   }
 
-  addField() {
-
-  }
-
-  editField(field: string) {
-
-  }
-
-  deleteField(field: string) {
-
+  deleteForm(form: CustomForm) {
+    this.customFormService.deleteCustomForm(form.id).subscribe(() => {
+      this.getForms();
+    });
   }
 
 }

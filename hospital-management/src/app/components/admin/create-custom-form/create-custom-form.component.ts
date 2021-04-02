@@ -21,13 +21,15 @@ export class CreateCustomFormComponent implements OnInit {
   displayedColumns: string[] = ["label", "type", "actions"];
   dataSource!: MatTableDataSource<QuestionBase>;
   formTypes!: Lookup[];
+  formId: string = "";
   editForm: CustomForm = {
-    id: 0,
+    id: "",
     name: "",
     type: "",
-    columns: 4,
+    columns: 1,
     alwaysInclude: false,
-    fields:[]
+    fields: [],
+    active: true
   };
 
   constructor(
@@ -43,7 +45,7 @@ export class CreateCustomFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const formId = parseInt(this.route.snapshot.paramMap.get('id') || "0", 10);
+    this.formId = this.route.snapshot.paramMap.get('id') || "0";
 
     this.lookupService.getLookupTypes().subscribe((data) => {
       const id = data.find(x => x.name == "Form Type")?.id;
@@ -52,23 +54,48 @@ export class CreateCustomFormComponent implements OnInit {
           this.formTypes = data;
         })
       }
-      this.customFormservice.getCustomFormById(formId).subscribe((data)=>{
+      this.customFormservice.getCustomFormById(this.formId).subscribe((data) => {
         this.editForm = data;
         this.dataSource.data = this.editForm.fields;
       });
     });
   }
 
-  openDialog(field:QuestionBase){
+  openDialog(field: QuestionBase) {
     const dialogRef = this.dialog.open(EditFieldDialogComponent, {
-      width: '250px',
+      width: '500px',
       data: field
     });
 
     dialogRef.afterClosed().subscribe(result => {
       try {
         if (result != undefined) {
-          this.editForm.fields.push(result);
+          var fields = this.editForm.fields;
+          let isExist = false;
+
+          fields.forEach(item => {
+            if (item.value == result.value) {
+              isExist = true;
+            }
+            if (item.controlType.indexOf("Text") != -1) {
+              item.options = []
+            }
+          });
+
+          //Update existing field
+          if (isExist) {
+            this.editForm.fields.map(item => {
+              if (item.value == result.value) {
+                return result;
+              }
+              else {
+                return item;
+              }
+            });
+          }
+          else {
+            this.editForm.fields.push(result);
+          }
           this.dataSource.data = this.editForm.fields
         }
       }
@@ -87,16 +114,33 @@ export class CreateCustomFormComponent implements OnInit {
     this.openDialog(field);
   }
 
-  deleteField(field: string) {
-
+  deleteField(deletedField: QuestionBase) {
+    this.editForm.fields = this.editForm.fields.filter(field => {
+      return field.label !== deletedField.label;
+    });
+    this.dataSource.data = this.editForm.fields;
   }
 
-  submitForm(){
-
-  }
-
-  cancelChanges(){
+  submitForm() {
+    if (this.formId == "0") {
+      this.customFormservice.addCustomForm(this.editForm).subscribe();
+      this.openSnackBar("Form added!")
+    }
+    else {
+      this.customFormservice.updateCustomForm(this.editForm.id, this.editForm).subscribe();
+      this.openSnackBar("Form updated!")
+    }
     this.location.back();
+  }
+
+  cancelChanges() {
+    this.location.back();
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, "Ok", {
+      duration: 2000,
+    });
   }
 
 }

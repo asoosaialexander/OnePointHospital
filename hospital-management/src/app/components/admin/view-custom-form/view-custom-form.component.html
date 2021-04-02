@@ -21,8 +21,8 @@
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let entry">
           <div class="button-row">
-            <button mat-stroked-button color="primary" [routerLink]="['/create-custom-form',entry.id]">Edit</button>
-            <button mat-stroked-button color="warn" (click)="deleteField(entry)">Delete</button>
+            <button mat-stroked-button color="primary" [routerLink]="['/create-custom-form',entry.id]"><mat-icon>edit</mat-icon>Edit</button>
+            <button mat-stroked-button color="warn" (click)="deleteForm(entry)"><mat-icon>delete</mat-icon>Delete</button>
           </div>
         </td>
       </ng-container>

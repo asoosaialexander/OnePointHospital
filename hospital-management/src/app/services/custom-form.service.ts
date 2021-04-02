@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CustomForm } from '../shared/custom-form';
+import { FieldOption } from '../shared/question-base';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class CustomFormService {
     return this.http.get<CustomForm[]>(this.url);
   }
 
-  getCustomFormById(id: number): Observable<CustomForm> {
+  getCustomFormById(id: string): Observable<CustomForm> {
     return this.http.get<CustomForm>(this.url + id);
   }
 
@@ -25,11 +26,11 @@ export class CustomFormService {
     return this.http.post<CustomForm>(this.url, data);
   }
 
-  updateCustomForm(id: number, data: CustomForm): Observable<{}> {
+  updateCustomForm(id: string, data: CustomForm): Observable<{}> {
     return this.http.put(this.url + id, data);
   }
 
-  deleteCustomForm(id: number): Observable<CustomForm> {
+  deleteCustomForm(id: string): Observable<CustomForm> {
     return this.http.delete<CustomForm>(this.url + id);
   }
 }
