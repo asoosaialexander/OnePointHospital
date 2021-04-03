@@ -1,6 +1,6 @@
 import { QuestionBase } from "./question-base";
 
-export interface CustomForm {
+export class CustomForm {
   id: string;
   name: string;
   type: string;
@@ -8,4 +8,10 @@ export interface CustomForm {
   alwaysInclude: boolean;
   fields: QuestionBase[];
   active: boolean;
+  constructor() {
+    this.id = this.name = this.type = "";
+    this.columns = 0;
+    this.alwaysInclude = this.active = false;
+    this.fields = [];
+  }
 }

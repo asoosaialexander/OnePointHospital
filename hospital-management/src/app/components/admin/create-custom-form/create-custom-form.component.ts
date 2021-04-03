@@ -55,10 +55,36 @@ export class CreateCustomFormComponent implements OnInit {
         })
       }
       this.customFormservice.getCustomFormById(this.formId).subscribe((data) => {
+        data.fields = data.fields.sort(this.sortObject);
         this.editForm = data;
         this.dataSource.data = this.editForm.fields;
       });
     });
+  }
+
+  sortObject(a: QuestionBase, b: QuestionBase) {
+    if (a.order > b.order)
+      return 1;
+    else if (a.order < b.order)
+      return -1;
+    else
+      return 0;
+  };
+
+  moveUp(rowId: number, item: QuestionBase) {
+    let temp = this.editForm.fields[rowId].order;
+    this.editForm.fields[rowId].order = this.editForm.fields[rowId - 1].order;
+    this.editForm.fields[rowId - 1].order = temp;
+    this.dataSource.data = this.dataSource.data.sort(this.sortObject);
+    this.dataSource.data = this.editForm.fields;
+  }
+
+  moveDown(rowId: number, item: QuestionBase) {
+    let temp = this.editForm.fields[rowId].order;
+    this.editForm.fields[rowId].order = this.editForm.fields[rowId + 1].order;
+    this.editForm.fields[rowId + 1].order = temp;
+    this.dataSource.data = this.dataSource.data.sort(this.sortObject);
+    this.dataSource.data = this.editForm.fields;
   }
 
   openDialog(field: QuestionBase) {
@@ -107,6 +133,7 @@ export class CreateCustomFormComponent implements OnInit {
 
   addField() {
     let newField: QuestionBase = new QuestionBase();
+    newField.order = this.dataSource.data.length + 1;
     this.openDialog(newField);
   }
 
