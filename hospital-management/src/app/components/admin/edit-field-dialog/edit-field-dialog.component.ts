@@ -47,11 +47,11 @@ export class EditFieldDialogComponent implements OnInit {
   }
 
   onOk(): void {
-    if(!this.data.value){
-      this.data.value=this.data.label;
+    if (this.data.key == "") {
+      this.data.key = this.data.label;
     }
     this.data.options = this.dataSource.data;
-    this.data.options.forEach(option=>{
+    this.data.options.forEach(option => {
       option.key = option.value
     });
   }

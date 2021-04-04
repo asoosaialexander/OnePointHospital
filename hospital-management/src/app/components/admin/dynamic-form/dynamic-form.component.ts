@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomFormService } from 'src/app/services/custom-form.service';
 import { CustomForm } from 'src/app/shared/custom-form';
 import { QuestionBase } from 'src/app/shared/question-base';
@@ -13,16 +13,18 @@ import { QuestionBase } from 'src/app/shared/question-base';
 export class DynamicFormComponent implements OnInit {
 
   dynamicForm: CustomForm = new CustomForm();
-  questions!: QuestionBase[];
   form!: FormGroup;
-  payLoad = '';
+  payLoad = {};
 
-  constructor(private customFormService:CustomFormService) {
+  constructor(private customFormService:CustomFormService, private fb:FormBuilder) {
   }
 
   ngOnInit() {
-    let id = 1;
-    this.form = this.toFormGroup(this.dynamicForm.fields);
+    let id = "6066b16f58bdb7c1f273cb10";
+    this.customFormService.getCustomFormById(id).subscribe((data) => {
+      this.dynamicForm = data;
+      this.form = this.toFormGroup(this.dynamicForm.fields);
+    });
   }
 
   onSubmit() {

@@ -36,7 +36,7 @@ export class CreateCustomFormComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private lookupService: LookupService,
-    private customFormservice: CustomFormService,
+    private customFormService: CustomFormService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
@@ -54,7 +54,7 @@ export class CreateCustomFormComponent implements OnInit {
           this.formTypes = data;
         })
       }
-      this.customFormservice.getCustomFormById(this.formId).subscribe((data) => {
+      this.customFormService.getCustomFormById(this.formId).subscribe((data) => {
         data.fields = data.fields.sort(this.sortObject);
         this.editForm = data;
         this.dataSource.data = this.editForm.fields;
@@ -150,11 +150,11 @@ export class CreateCustomFormComponent implements OnInit {
 
   submitForm() {
     if (this.formId == "0") {
-      this.customFormservice.addCustomForm(this.editForm).subscribe();
+      this.customFormService.addCustomForm(this.editForm).subscribe();
       this.openSnackBar("Form added!")
     }
     else {
-      this.customFormservice.updateCustomForm(this.editForm.id, this.editForm).subscribe();
+      this.customFormService.updateCustomForm(this.editForm.id, this.editForm).subscribe();
       this.openSnackBar("Form updated!")
     }
     this.location.back();

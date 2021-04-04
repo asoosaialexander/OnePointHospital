@@ -1,20 +1,32 @@
-<div [formGroup]="form">
-  <div *ngFor="let question of questions">
-    <div [ngSwitch]="question.controlType">
-      <mat-form-field *ngSwitchCase="'textbox'"  appearance="fill">
-        <mat-label>{{question.label}}</mat-label>
-        <input matInput [formControlName]="question.key" [id]="question.key" [type]="question.type">
-        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-      </mat-form-field>
-      <mat-form-field *ngSwitchCase="'dropdown'" appearance="fill" >
-        <mat-label>{{question.label}}</mat-label>
-        <mat-select [id]="question.key" [formControlName]="question.key" >
-          <mat-option *ngFor="let opt of question.options" [value]="opt.key">
-            {{opt.value}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+<mat-card>
+  <div [formGroup]="form">
+    <div *ngFor="let field of dynamicForm.fields">
+      <div [ngSwitch]="field.controlType">
+        <mat-form-field *ngSwitchCase="'Text'" appearance="fill">
+          <mat-label>{{field.label}}</mat-label>
+          <input matInput [formControlName]="field.value" [id]="field.value" [type]="field.type">
+          <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'Large Text'" appearance="fill">
+          <mat-label>{{field.label}}</mat-label>
+          <textarea matInput [formControlName]="field.value" [id]="field.value" [type]="field.type"></textarea>
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'Dropdown'" appearance="fill">
+          <mat-label>{{field.label}}</mat-label>
+          <mat-select [id]="field.value" [formControlName]="field.value">
+            <mat-option *ngFor="let opt of field.options" [value]="opt.key">
+              {{opt.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngSwitchCase="'Radio'">
+          <label>{{field.label}}: </label>
+          <mat-radio-group [formControlName]="field.value">
+            <mat-radio-button *ngFor="let opt of field.options" value="opt.key">{{opt.value}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <!-- <div class="errorMessage" *ngIf="!isValid">{{field.label}} is required</div> -->
     </div>
-    <!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div> -->
   </div>
-</div>
+</mat-card>

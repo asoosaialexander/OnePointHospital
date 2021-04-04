@@ -4,10 +4,16 @@
   </button>
   <span>{{title}}</span>
   <div class="menu-buttons">
-    <button mat-button [matMenuTriggerFor]="menu">Admin</button>
-    <mat-menu #menu="matMenu">
+    <button mat-button [matMenuTriggerFor]="adminMenu">Admin</button>
+    <mat-menu #adminMenu="matMenu">
       <button mat-menu-item routerLink="/lookup-lists">Lookup Lists</button>
       <button mat-menu-item routerLink="/custom-forms">Custom Forms</button>
+    </mat-menu>
+  </div>
+  <div class="menu-buttons">
+    <button mat-button [matMenuTriggerFor]="patientMenu">Patient</button>
+    <mat-menu #patientMenu="matMenu">
+      <button mat-menu-item routerLink="/add-patient">Add Patient</button>
     </mat-menu>
   </div>
   <span class="spacer"></span>
