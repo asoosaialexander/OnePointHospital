@@ -100,7 +100,7 @@ export class CreateCustomFormComponent implements OnInit {
           let isExist = false;
 
           fields.forEach(item => {
-            if (item.value == result.value) {
+            if (item.label == result.label) {
               isExist = true;
             }
             if (item.controlType.indexOf("Text") != -1) {

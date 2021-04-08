@@ -9,6 +9,7 @@ import {
   Button,
   ListItem,
 } from 'react-native-elements';
+import { getInitials } from '../shared/common';
 
 const list = [
   {
@@ -34,16 +35,7 @@ class HomeScreen extends React.Component {
     this.setState({search});
   };
 
-  getInitials = name => {
-    let names = name.split(' ');
-    let initials = '';
-    names.forEach(name => {
-      if (name.toLowerCase() != 'dr.' && name.toLowerCase() != 'dr') {
-        initials += name.substring(0, 1).toUpperCase();
-      }
-    });
-    return initials;
-  };
+  
 
   render() {
     const {search} = this.state;
@@ -81,7 +73,7 @@ class HomeScreen extends React.Component {
             <ListItem key={i} bottomDivider>
               <Avatar
                 rounded
-                title={this.getInitials(l.name)}
+                title={getInitials(l.name)}
                 source={{uri: l.avatar_url}}
               />
               <ListItem.Content>

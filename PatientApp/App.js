@@ -1,50 +1,63 @@
 import * as React from 'react';
-import HomeScreen from './Views/HomeScreen';
-import {Button, View} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Header, Icon} from 'react-native-elements';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import HomeScreen from './views/HomeScreen';
+import { Button, View } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AppointmentScreen from './views/AppointmentScreen';
+import HelpScreen from './views/HelpScreen';
+import RecordScreen from './views/RecordScreen';
 
 function MyTabs() {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'reader' : 'reader-outline';
+          switch (route.name) {
+            case 'Home':
+              iconName = focused ? 'home' : 'home-outline';
+              break;
+            case 'Records':
+              iconName = focused ? 'reader' : 'reader-outline';
+              break;
+            case 'Appointment':
+              iconName = focused ? 'reader' : 'reader-outline';
+              break;
+            case 'Help':
+              iconName = focused ? 'help-circle' : 'help-circle-outline';
+              break;
+            default:
+              iconName = focused ? 'reader' : 'reader-outline';
           }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <Ionicons name={iconName} size={25} color={color} />;
         },
       })}
       tabBarOptions={{
         activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
+        inactiveTintColor: 'grey',
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={NotificationsScreen} />
+      <Tab.Screen name="Records" component={RecordScreen} />
+      <Tab.Screen name="Appointment" component={AppointmentScreen} />
+      <Tab.Screen name="Help" component={HelpScreen} />
     </Tab.Navigator>
   );
 }
 
-function NotificationsScreen({navigation}) {
+function NotificationsScreen({ navigation }) {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button onPress={() => navigation.goBack()} title="Go back home" />
     </View>
   );
 }
 
 const Drawer = createDrawerNavigator();
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (

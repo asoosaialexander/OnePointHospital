@@ -1,0 +1,56 @@
+{
+    "prescriptions": [
+        {
+            "id": "0",
+            "patient": {
+                "name": "Brad John",
+                "dateOfBirth": "1995-12-12",
+                "gender": "male"
+            },
+            "vitals": {
+                "weight": "73.1 kg",
+                "bodyTemperature": "98 F"
+            },
+            "hospital": {
+                "name": "Child Health Clinic",
+                "addressLine1": "Vijaya Nagar",
+                "addressLine2": "Velachery",
+                "city": "Chennai",
+                "postalCode": 600042
+            },
+            "doctor": {
+                "name": "Dr. Rajesh M",
+                "doctorId": 23432,
+                "consulationFee": "300 Rs"
+            },
+            "dosage": [
+                {
+                    "name": "Syrup Azee 200",
+                    "composition": "AZITHROMYCIN(200 MG)",
+                    "frequency": {
+                        "morning": null,
+                        "afternoon": "4 ml",
+                        "night": null
+                    },
+                    "duration": "5 days",
+                    "Notes": "Before Food"
+                },
+                {
+                    "name": "Syrup Hiss",
+                    "composition": "WET COUGH",
+                    "frequency": {
+                        "morning": "5 ml",
+                        "afternoon": "5 ml",
+                        "night": "5 ml"
+                    },
+                    "duration": "3 days",
+                    "Notes": "After Food"
+                }
+            ],
+            "instructions": [
+                "Nebs with DUOJET x12 th hourly x 2 days",
+                "Nebs with Budejet LV x12 th hourly x 2 days"
+            ]
+        }
+    ]
+}
