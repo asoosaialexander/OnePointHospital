@@ -2,7 +2,12 @@
     "prescriptions": [
         {
             "id": "0",
+            "date": "12-12-2020",
+            "diagnosis": [
+                "Fever"
+            ],
             "patient": {
+                "id": "RS1234",
                 "name": "Brad John",
                 "dateOfBirth": "1995-12-12",
                 "gender": "male"
@@ -20,8 +25,9 @@
             },
             "doctor": {
                 "name": "Dr. Rajesh M",
-                "doctorId": 23432,
-                "consulationFee": "300 Rs"
+                "medicalId": 23432,
+                "speciality": "Pediatrician",
+                "consultationFee": "300 Rs"
             },
             "dosage": [
                 {
@@ -33,7 +39,7 @@
                         "night": null
                     },
                     "duration": "5 days",
-                    "Notes": "Before Food"
+                    "notes": "Before Food"
                 },
                 {
                     "name": "Syrup Hiss",
@@ -44,7 +50,65 @@
                         "night": "5 ml"
                     },
                     "duration": "3 days",
-                    "Notes": "After Food"
+                    "notes": "After Food"
+                }
+            ],
+            "instructions": [
+                "Nebs with DUOJET x12 th hourly x 2 days",
+                "Nebs with Budejet LV x12 th hourly x 2 days"
+            ]
+        },
+        {
+            "id": "1",
+            "date": "02-03-2021",
+            "diagnosis": [
+                "Head Injury"
+            ],
+            "patient": {
+                "id": "RS1234",
+                "name": "Brad John",
+                "dateOfBirth": "1995-12-12",
+                "gender": "male"
+            },
+            "vitals": {
+                "weight": "73.1 kg",
+                "bodyTemperature": "98.6 F"
+            },
+            "hospital": {
+                "name": "Sulaiman memorial hospital",
+                "addressLine1": "Singaperumalkoil",
+                "addressLine2": "Chengalpattu",
+                "city": "Chennai",
+                "postalCode": 600204
+            },
+            "doctor": {
+                "name": "Dr. Vanitha Rajesh",
+                "medicalId": 11432,
+                "speciality": "General Medicine",
+                "consultationFee": "200 Rs"
+            },
+            "dosage": [
+                {
+                    "name": "Syrup Azee 200",
+                    "composition": "AZITHROMYCIN(200 MG)",
+                    "frequency": {
+                        "morning": null,
+                        "afternoon": "4 ml",
+                        "night": null
+                    },
+                    "duration": "5 days",
+                    "notes": "Before Food"
+                },
+                {
+                    "name": "Syrup Hiss",
+                    "composition": "WET COUGH",
+                    "frequency": {
+                        "morning": "5 ml",
+                        "afternoon": "5 ml",
+                        "night": "5 ml"
+                    },
+                    "duration": "3 days",
+                    "notes": "After Food"
                 }
             ],
             "instructions": [

@@ -27,3 +27,11 @@ export function getDateList(days) {
 
     return dates;
 }
+
+export function getAge(dateOfBirthText) {
+    var dob = new Date(dateOfBirthText);
+    var month_diff = Date.now() - dob.getTime();
+    var age_dt = new Date(month_diff);
+    var year = age_dt.getUTCFullYear();
+    return Math.abs(year - 1970);
+}
