@@ -6,7 +6,6 @@ import {
   Icon,
   SearchBar,
   Text,
-  Button,
   ListItem,
 } from 'react-native-elements';
 import { getInitials } from '../shared/common';

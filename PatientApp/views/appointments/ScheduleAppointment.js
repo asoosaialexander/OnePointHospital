@@ -6,9 +6,10 @@ import {
   Icon,
   Text,
   ListItem,
+  Button,
   ButtonGroup
 } from 'react-native-elements';
-import { getDateList, getInitials } from '../shared/common';
+import { getDateList, getInitials } from '../../shared/common';
 
 const doctor = {
   name: 'Dr. Rajesh',
@@ -17,7 +18,7 @@ const doctor = {
   subtitle: 'Pediatrician',
 };
 
-class AppointmentScreen extends React.Component {
+class ScheduleAppointmentScreen extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -38,7 +39,7 @@ class AppointmentScreen extends React.Component {
       type='material'
       onPress={() => console.log('calendar')}
     />;
-    
+
     const buttons = [...getDateList(5), { element: calendar }];
 
     return (
@@ -69,9 +70,47 @@ class AppointmentScreen extends React.Component {
           selectedIndex={selectedIndex}
           buttons={buttons}
         />
+        {getAppointmentLinks()}
       </>
     )
   }
 }
 
-export default AppointmentScreen;
+const getAppointmentLinks = () => {
+  const time = ["02:00 PM", "02:05 PM", "02:10 PM", "02:35 PM", "09:30 PM", "09:35 PM", "02:05 PM", "02:10 PM", "02:35 PM", "09:30 PM", "09:35 PM"]
+  const appointments = [];
+
+  let rows = Math.floor(time.length / 4) + 1;
+  let i = 0;
+  while (i < rows) {
+    const items = []
+    let j = 0
+    while (j < 4) {
+      if (time[(i * 4) + j] !== undefined)
+        items.push(<Button title={time[(i * 4) + j]} type="outline" />)
+      j++;
+    }
+    appointments.push(
+      <View style={{
+        flexDirection: "row",
+        padding: 10, paddingBottom: 0,
+        justifyContent: "space-evenly"
+      }}>
+        {items}
+      </View>
+    )
+    i++;
+  }
+  return (
+    <View>
+      <View>
+        <Text style={{ fontSize: 18, paddingLeft: 10, paddingTop: 10, fontWeight: "bold" }}>
+          Evening, Memorial Hospital
+          </Text>
+      </View>
+      {appointments}
+    </View>
+  );
+}
+
+export default ScheduleAppointmentScreen;

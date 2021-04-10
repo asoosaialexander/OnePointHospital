@@ -6,9 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AppointmentScreen from './views/AppointmentScreen';
+import AppointmentScreen from './views/appointments/Appointment';
+import RecordScreen from './views/records/Records';
 import HelpScreen from './views/HelpScreen';
-import RecordScreen from './views/RecordScreen';
 
 function MyTabs() {
   return (

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import * as React from 'react';
 import { TouchableNativeFeedback, View } from 'react-native';
-import { Text, Divider } from 'react-native-elements';
+import { Text } from 'react-native-elements';
 
-class PastAppointmentsScreen extends React.Component {
+class HealthRecordsScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -66,4 +66,4 @@ class PastAppointmentsScreen extends React.Component {
     }
 }
 
-export default PastAppointmentsScreen;
+export default HealthRecordsScreen;

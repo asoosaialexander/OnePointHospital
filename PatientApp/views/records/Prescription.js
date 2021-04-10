@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { Divider } from 'react-native-elements';
 import { Table, Row, Rows } from 'react-native-table-component';
 import axios from 'axios';
-import { getAge } from './../shared/common';
+import { getAge } from '../../shared/common';
 
 class PrescriptionScreen extends React.Component {
     constructor(props) {
@@ -151,7 +151,7 @@ class PrescriptionScreen extends React.Component {
                 <Divider style={{ height: 20, backgroundColor: "inherit" }} />
                 <View>
                     <Text style={{ fontSize: 11 }}>Received with thanks ₹{state.doctor.consultationFee} for Consulation</Text>
-                    <Image source={require("../images/signature.png")} style={{ height: 40, width: 50 }}>
+                    <Image source={require("../../images/signature.png")} style={{ height: 40, width: 50 }}>
                     </Image>
                     <Text style={{ fontWeight: "bold", fontSize: 12 }}>{state.doctor.name}</Text>
                     <Text style={{ fontSize: 11 }}>{state.doctor.speciality}</Text>
