@@ -24,6 +24,9 @@ const list = [
 
 
 class PastAppointmentsScreen extends React.Component {
+    constructor(props){
+        super(props);
+    }
     render() {
         return (
             <View style={{ flex: 1, flexDirection: "row", maxHeight: 140 }}>
@@ -59,21 +62,23 @@ class PastAppointmentsScreen extends React.Component {
                         paddingBottom: 0
                     }}>
                         <Text>
-                        <Text style={{ fontWeight: "bold", fontSize: 16 }}>Dr.Rajesh S</Text>
-                        <Text>  (Pediatrician)</Text>
+                            <Text style={{ fontWeight: "bold", fontSize: 16 }}>Dr.Rajesh S</Text>
+                            <Text>  (Pediatrician)</Text>
                         </Text>
                         <Text >Patient - John Doe</Text>
                         <View style={{
                             flex: 1,
                             flexDirection: "row",
-                            paddingTop: 2,
+                            paddingTop: 3,
                             justifyContent: "flex-start",
                         }}>
                             <View style={{ marginRight: 5 }}>
-                                <Button title="View Prescription" type="outline" />
+                                <Button title="View Details" type="outline"
+                                    onPress={() => { this.props.navigation.navigate('Appointment Details') }} />
                             </View>
                             <View>
-                                <Button title="Book Followup" />
+                                <Button title="Book Follow-Up"  
+                                onPress={() => { this.props.navigation.navigate('Book an Appointment') }} />
                             </View>
                         </View>
                     </View>
