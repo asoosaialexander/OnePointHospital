@@ -9,6 +9,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppointmentScreen from './views/appointments/Appointment';
 import RecordScreen from './views/records/Records';
 import HelpScreen from './views/HelpScreen';
+import ActivityScreen from './views/Activity';
+import RecordsScreen from './views/records/Records';
+import MedicineScreen from './views/medicine/Medicine';
 
 function MyTabs() {
   return (
@@ -40,19 +43,12 @@ function MyTabs() {
         activeTintColor: 'tomato',
         inactiveTintColor: 'grey',
       }}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Records" component={RecordScreen} />
-      <Tab.Screen name="Appointment" component={AppointmentScreen} />
-      <Tab.Screen name="Help" component={HelpScreen} />
+      <Tab.Screen name="Activity" component={ActivityScreen} />
+      <Tab.Screen name="Medicine" component={MedicineScreen} />
+      <Tab.Screen name="Directory" component={RecordScreen} />
+      <Tab.Screen name="Symptoms" component={AppointmentScreen} />
+      <Tab.Screen name="Inbox" component={HelpScreen} />
     </Tab.Navigator>
-  );
-}
-
-function NotificationsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
   );
 }
 
@@ -65,7 +61,9 @@ export default function App() {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Home">
           <Drawer.Screen name="Home" component={MyTabs} />
-          <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+          <Drawer.Screen name="Get Appointment" component={HomeScreen} />
+          <Drawer.Screen name="Past Appointments" component={AppointmentScreen} />
+          <Drawer.Screen name="Medical Records" component={RecordsScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

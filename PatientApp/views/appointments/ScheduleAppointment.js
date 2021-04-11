@@ -19,8 +19,8 @@ const doctor = {
 };
 
 class ScheduleAppointmentScreen extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       selectedIndex: 0
     }
@@ -70,13 +70,13 @@ class ScheduleAppointmentScreen extends React.Component {
           selectedIndex={selectedIndex}
           buttons={buttons}
         />
-        {getAppointmentLinks()}
+        {getAppointmentLinks(this.props.navigation)}
       </>
     )
   }
 }
 
-const getAppointmentLinks = () => {
+const getAppointmentLinks = (navigation) => {
   const time = ["02:00 PM", "02:05 PM", "02:10 PM", "02:35 PM", "09:30 PM", "09:35 PM", "02:05 PM", "02:10 PM", "02:35 PM", "09:30 PM", "09:35 PM"]
   const appointments = [];
 
@@ -87,7 +87,8 @@ const getAppointmentLinks = () => {
     let j = 0
     while (j < 4) {
       if (time[(i * 4) + j] !== undefined)
-        items.push(<Button title={time[(i * 4) + j]} type="outline" />)
+        items.push(<Button title={time[(i * 4) + j]} type="outline"
+          onPress={() => { navigation.navigate('Appointment Summary') }} />)
       j++;
     }
     appointments.push(
