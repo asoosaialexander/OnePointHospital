@@ -1,5 +1,22 @@
 {
-    "schedule": [
+    "appointments": [
+        {
+            "id": "0",
+            "patientId": "0",
+            "doctorId": "0",
+            "date": "02-03-2021",
+            "time": "02:00 PM",
+            "appointmentType": "Physical",
+            "hospitalName":"Memorial Hospital",
+            "hostpitalAddress": {
+                "addressLine1":"Singaperumalkoil",
+                "city":"Chennai",
+                "postalCode":600042
+            },
+            "prescriptionId": "0"
+        }
+    ],
+    "schedules": [
         {
             "id": "0",
             "doctor": "Dr. Rajesh",
@@ -38,7 +55,7 @@
                                 "Thursday",
                                 "Friday"
                             ],
-                            "time":[
+                            "time": [
                                 "10:45 AM",
                                 "11:00 AM",
                                 "11:30 AM",

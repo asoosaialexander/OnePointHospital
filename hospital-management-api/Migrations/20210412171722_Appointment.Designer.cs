@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hospital_management_api.Data;
@@ -10,9 +11,10 @@ using hospital_management_api.Data;
 namespace hospital_management_api.Migrations
 {
     [DbContext(typeof(HospitalManagementContext))]
-    partial class HospitalManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20210412171722_Appointment")]
+    partial class Appointment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,9 +86,6 @@ namespace hospital_management_api.Migrations
                     b.Property<float>("FullPrice")
                         .HasColumnType("real");
 
-                    b.Property<int?>("HospitalId")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("IsCancelled")
                         .HasColumnType("boolean");
 
@@ -96,8 +95,6 @@ namespace hospital_management_api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
-
-                    b.HasIndex("HospitalId");
 
                     b.HasIndex("PatientId");
 
@@ -251,17 +248,11 @@ namespace hospital_management_api.Migrations
                         .WithMany()
                         .HasForeignKey("DoctorId");
 
-                    b.HasOne("hospital_management_api.Models.Hospital", "Hospital")
-                        .WithMany()
-                        .HasForeignKey("HospitalId");
-
                     b.HasOne("hospital_management_api.Models.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId");
 
                     b.Navigation("Doctor");
-
-                    b.Navigation("Hospital");
 
                     b.Navigation("Patient");
                 });

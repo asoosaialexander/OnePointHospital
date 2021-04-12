@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hospital_management_api.Data;
@@ -10,9 +11,10 @@ using hospital_management_api.Data;
 namespace hospital_management_api.Migrations
 {
     [DbContext(typeof(HospitalManagementContext))]
-    partial class HospitalManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20210412172717_appointmenthospital")]
+    partial class appointmenthospital
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

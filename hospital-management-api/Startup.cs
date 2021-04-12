@@ -43,7 +43,7 @@ namespace hospital_management_api
                 });
             });
 
-            services.AddDbContext<HospitalManagementContext>(options=>
+            services.AddDbContext<HospitalManagementContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
             );
 
@@ -67,6 +67,9 @@ namespace hospital_management_api
 
             services.AddSingleton<CustomFormService>();
             services.AddControllers();
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +79,16 @@ namespace hospital_management_api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseCors(MyAllowSpecificOrigins);
 
