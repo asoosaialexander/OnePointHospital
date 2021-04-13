@@ -1,0 +1,41 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Patients
+            <button mat-button color="primary" routerLink="/add-patient/0">
+                <mat-icon>add_box</mat-icon>Add Patient
+            </button>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let entry"> P{{('000' + entry.id).slice(-4)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let entry"> {{entry.firstName}} {{entry.lastName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="gender">
+                <th mat-header-cell *matHeaderCellDef> Gender </th>
+                <td mat-cell *matCellDef="let entry"> {{entry.gender}} </td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let entry">
+                    <div class="button-row">
+                        <button mat-stroked-button color="primary" [routerLink]="['/add-patient',entry.id]">
+                            <mat-icon>edit</mat-icon>Edit
+                        </button>
+                        <button mat-stroked-button color="warn" (click)="delete(entry)">
+                            <mat-icon>delete</mat-icon>Delete
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>

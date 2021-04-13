@@ -11,9 +11,18 @@
     </mat-menu>
   </div>
   <div class="menu-buttons">
-    <button mat-button [matMenuTriggerFor]="patientMenu">Patient</button>
-    <mat-menu #patientMenu="matMenu">
-      <button mat-menu-item routerLink="/add-patient">Add Patient</button>
+    <button mat-button [matMenuTriggerFor]="patientMenu">Patients</button>
+    <mat-menu #patientMenu="matMenu"> 
+      <button mat-menu-item routerLink="/view-patient">All Patients</button>
+      <button mat-menu-item routerLink="/add-patient/0">Add Patient</button>
+    </mat-menu>
+  </div>
+  <div class="menu-buttons">
+    <button mat-button [matMenuTriggerFor]="appointmentMenu">Scheduling</button>
+    <mat-menu #appointmentMenu="matMenu"> 
+      <button mat-menu-item routerLink="/view-patient">Today's Appointment</button>
+      <button mat-menu-item routerLink="/view-patient">Appointments This Week</button>
+      <button mat-menu-item routerLink="/add-patient/0">Add Appointment</button>
     </mat-menu>
   </div>
   <span class="spacer"></span>

@@ -15,16 +15,18 @@ export class DynamicFormComponent implements OnInit {
   dynamicForm: CustomForm = new CustomForm();
   form!: FormGroup;
   payLoad = {};
+  showForm = false;
 
-  constructor(private customFormService:CustomFormService, private fb:FormBuilder) {
-  }
-
-  ngOnInit() {
+  constructor(private customFormService: CustomFormService, private fb: FormBuilder) {
     let id = "6066b16f58bdb7c1f273cb10";
     this.customFormService.getCustomFormById(id).subscribe((data) => {
       this.dynamicForm = data;
       this.form = this.toFormGroup(this.dynamicForm.fields);
+      this.showForm=true;
     });
+  }
+
+  ngOnInit() {
   }
 
   onSubmit() {

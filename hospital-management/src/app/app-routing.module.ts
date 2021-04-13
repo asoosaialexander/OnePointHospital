@@ -5,12 +5,14 @@ import { LookupListsComponent } from './components/admin/lookup-lists/lookup-lis
 import { ViewCustomFormComponent } from './components/admin/view-custom-form/view-custom-form.component';
 import { AppointmentCalendarComponent } from './components/appointment/appointment-calendar/appointment-calendar.component';
 import { AddPatientComponent } from './components/patient/add-patient/add-patient.component';
+import { ViewPatientComponent } from './components/patient/view-patient/view-patient.component';
 
 const routes: Routes = [
   { path: 'lookup-lists', component: LookupListsComponent },
   { path: 'custom-forms', component: ViewCustomFormComponent },
   { path: 'create-custom-form/:id', component: CreateCustomFormComponent },
-  { path: 'add-patient', component: AddPatientComponent },
+  { path: 'view-patient', component: ViewPatientComponent },
+  { path: 'add-patient/:id', component: AddPatientComponent },
   { path: 'appointment', component: AppointmentCalendarComponent }
 ];
 

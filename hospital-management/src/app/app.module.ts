@@ -13,7 +13,10 @@ import { DynamicFormComponent } from './components/admin/dynamic-form/dynamic-fo
 import { CreateCustomFormComponent } from './components/admin/create-custom-form/create-custom-form.component';
 import { ViewCustomFormComponent } from './components/admin/view-custom-form/view-custom-form.component';
 import { EditFieldDialogComponent } from './components/admin/edit-field-dialog/edit-field-dialog.component';
+import { EditAppointmentComponent } from './components/appointment/edit-appointment/edit-appointment.component';
+import { ViewPatientComponent } from './components/patient/view-patient/view-patient.component';
 import { AddPatientComponent } from './components/patient/add-patient/add-patient.component';
+import { PatientFormDialogComponent } from './components/patient/patient-form-dialog/patient-form-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { AddPatientComponent } from './components/patient/add-patient/add-patien
     CreateCustomFormComponent,
     ViewCustomFormComponent,
     EditFieldDialogComponent,
-    AddPatientComponent
+    EditAppointmentComponent,
+    ViewPatientComponent,
+    AddPatientComponent,
+    PatientFormDialogComponent
   ],
   imports: [
     BrowserModule,

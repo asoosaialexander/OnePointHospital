@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Add Custom Form</h1>
+<div mat-dialog-content>
+    <mat-form-field appearance="fill">
+        <mat-label>Custom Form</mat-label>
+        <mat-select #sel>
+            <mat-option *ngFor="let form of listSource" [value]="form.id">
+                {{form.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button [mat-dialog-close]="sel.value" cdkFocusInitial>Ok</button>
+</div>

@@ -1,2 +1,41 @@
-<p>add-patient works!</p>
-<app-dynamic-form></app-dynamic-form>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            {{patientId && patientId==0?"Add":"Edit"}} Patient
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="patientForm">
+            <mat-form-field appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input matInput required formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input matInput required formControlName="lastName">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Gender</mat-label>
+                <mat-select required formControlName="gender">
+                    <mat-option value="Male">Male</mat-option>
+                    <mat-option value="Female">Female</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Date Of Birth</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </form>
+        Forms<button mat-button color="primary" (click)="addEntry()">
+            <mat-icon>add_box</mat-icon>Add Form
+        </button>
+        <app-dynamic-form></app-dynamic-form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">{{patientId &&
+            patientId==0?"Add":"Update"}}</button>
+    </mat-card-actions>
+</mat-card>
