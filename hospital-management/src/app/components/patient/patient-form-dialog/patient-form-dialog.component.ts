@@ -18,9 +18,8 @@ export class PatientFormDialogComponent implements OnInit {
     private customFormService: CustomFormService) {
 
     this.customFormService.getCustomForm().subscribe((data) => {
-      console
       this.listSource = data;
-    })
+    });
   }
 
   ngOnInit(): void {

@@ -1,7 +1,7 @@
 <mat-card *ngIf="showForm">
-  <form [formGroup]="form">
-    <h4>{{dynamicForm.name}}</h4>
-    <div [ngSwitch]="field.controlType" *ngFor="let field of dynamicForm.fields">
+  <form [formGroup]="form" *ngIf="selectedForm">
+    <h4>{{selectedForm.name}} - Form</h4>
+    <div [ngSwitch]="field.controlType" *ngFor="let field of selectedForm.fields">
       <mat-form-field *ngSwitchCase="'Text'" appearance="fill">
         <mat-label>{{field.label}}</mat-label>
         <input matInput [formControlName]="field.key">

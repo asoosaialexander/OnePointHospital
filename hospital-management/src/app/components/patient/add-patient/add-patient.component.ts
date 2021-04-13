@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatientFormDialogComponent } from '../patient-form-dialog/patient-form-dialog.component';
 import { CustomForm } from 'src/app/shared/custom-form';
+import { CustomFormService } from 'src/app/services/custom-form.service';
 
 @Component({
   selector: 'app-add-patient',
@@ -24,12 +25,14 @@ export class AddPatientComponent implements OnInit {
     dateOfBirth: new FormControl('')
   });
 
-  customForms:CustomForm[] = [];
+  title = '';
+  customForms!: CustomForm[];
 
   patientId: number;
   newPatient!: Patient;
 
   constructor(
+    private customFormService: CustomFormService,
     private location: Location,
     private route: ActivatedRoute,
     private patientService: PatientService,
@@ -37,14 +40,19 @@ export class AddPatientComponent implements OnInit {
     private snackBar: MatSnackBar) {
 
     this.patientId = parseInt(this.route.snapshot.paramMap.get('id') || "0");
+    this.title = this.patientId === 0 ? "Add" : "Update";
   }
 
   ngOnInit(): void {
     if (this.patientId != 0) {
       this.patientService.getPatientById(this.patientId).subscribe(patient => {
         this.patientForm.setValue(patient);
-      })
+      });
     }
+    this.customFormService.getCustomForm().subscribe((data) => {
+      this.customForms = data;
+      console.log(this.customForms);
+    });
   }
 
   onSubmit() {
@@ -85,11 +93,11 @@ export class AddPatientComponent implements OnInit {
   addEntry(): void {
     const dialogRef = this.dialog.open(PatientFormDialogComponent, {
       width: '250px',
-      data: { }
+      data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-     console.log("Result", result);
+      console.log("Result", result);
     });
   }
 

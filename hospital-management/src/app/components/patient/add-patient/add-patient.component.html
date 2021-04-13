@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title>
-            {{patientId && patientId==0?"Add":"Edit"}} Patient
+            {{title}} Patient
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -31,11 +31,12 @@
         Forms<button mat-button color="primary" (click)="addEntry()">
             <mat-icon>add_box</mat-icon>Add Form
         </button>
-        <app-dynamic-form></app-dynamic-form>
+        <div *ngFor="let form of customForms">
+            <app-dynamic-form [selectedForm]="form"></app-dynamic-form>
+        </div>
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-        <button mat-raised-button color="primary" (click)="onSubmit()">{{patientId &&
-            patientId==0?"Add":"Update"}}</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">{{title}}</button>
     </mat-card-actions>
 </mat-card>
