@@ -14,8 +14,6 @@ export class ViewPatientComponent implements OnInit {
   displayedColumns: string[] = ["id", "name", "gender", "actions"];
   dataSource!: MatTableDataSource<Patient>;
 
-
-
   constructor(private patientService: PatientService) {
     this.dataSource = new MatTableDataSource();
   }
@@ -29,8 +27,6 @@ export class ViewPatientComponent implements OnInit {
       this.dataSource.data = data;
     })
   }
-
-
 
   delete(entry: Patient) {
     this.patientService.deletePatient(entry.id).subscribe(()=>{

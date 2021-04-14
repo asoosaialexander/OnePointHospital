@@ -4,6 +4,7 @@ import { CreateCustomFormComponent } from './components/admin/create-custom-form
 import { LookupListsComponent } from './components/admin/lookup-lists/lookup-lists.component';
 import { ViewCustomFormComponent } from './components/admin/view-custom-form/view-custom-form.component';
 import { AppointmentCalendarComponent } from './components/appointment/appointment-calendar/appointment-calendar.component';
+import { EditAppointmentComponent } from './components/appointment/edit-appointment/edit-appointment.component';
 import { AddPatientComponent } from './components/patient/add-patient/add-patient.component';
 import { ViewPatientComponent } from './components/patient/view-patient/view-patient.component';
 
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'create-custom-form/:id', component: CreateCustomFormComponent },
   { path: 'view-patient', component: ViewPatientComponent },
   { path: 'add-patient/:id', component: AddPatientComponent },
-  { path: 'appointment', component: AppointmentCalendarComponent }
+  { path: 'appointment', component: AppointmentCalendarComponent },
+  { path: 'edit-appointment/:id', component: EditAppointmentComponent }
 ];
 
 @NgModule({

@@ -49,10 +49,10 @@ export class AddPatientComponent implements OnInit {
         this.patientForm.setValue(patient);
       });
     }
-    this.customFormService.getCustomForm().subscribe((data) => {
-      this.customForms = data;
-      console.log(this.customForms);
-    });
+    // this.customFormService.getCustomForm().subscribe((data) => {
+    //   this.customForms = data;
+    //   console.log(this.customForms);
+    // });
   }
 
   onSubmit() {
@@ -96,8 +96,14 @@ export class AddPatientComponent implements OnInit {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("Result", result);
+    dialogRef.afterClosed().subscribe(selectedForm => {
+      this.customFormService.getCustomFormById(selectedForm).subscribe((data) => {
+        if (this.customForms == undefined) {
+          this.customForms = [{ ...data }];
+        } else {
+          this.customForms.push(data);
+        }
+      });
     });
   }
 

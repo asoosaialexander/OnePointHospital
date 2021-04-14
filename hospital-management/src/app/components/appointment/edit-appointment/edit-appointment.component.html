@@ -1,1 +1,65 @@
-<p>edit-appointment works!</p>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Add Appointment
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="appointmentForm">
+            <!-- <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Patient</mat-label>
+                <input type="text" matInput formControlName="patient" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onPatientSelect($event)">
+                    <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.id">
+                        {{patient.firstName + " " + patient.lastName}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field> -->
+            <mat-form-field appearance="fill">
+                <mat-label>Patient</mat-label>
+                <mat-select formControlName="patient" required>
+                    <mat-option *ngFor="let patient of patients" [value]="patient.id">
+                        {{patient.firstName + " " + patient.lastName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Doctor</mat-label>
+                <mat-select formControlName="doctor" required>
+                    <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
+                        {{doctor.firstName + " " + doctor.lastName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="rbGroup">
+                <div>Type: </div>
+                <mat-radio-group formControlName="appointmentType" (change)="onChange()">
+                    <mat-radio-button value="Physical">Physical</mat-radio-button>
+                    <mat-radio-button value="Video">Video Consultation</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Appointment At</mat-label>
+                <mat-select formControlName="hospital" required>
+                    <mat-option *ngFor="let hospital of hospitals" [value]="hospital.id">
+                        {{hospital.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Time</mat-label>
+                <mat-select formControlName="time" required>
+                    <mat-option *ngFor="let hospital of hospitals" [value]="hospital.id">
+                        {{hospital.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Add</button>
+    </mat-card-actions>
+</mat-card>
