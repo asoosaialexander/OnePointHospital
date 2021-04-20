@@ -11,6 +11,11 @@ import { DoctorService } from 'src/app/services/doctor.service';
 import { Doctor } from 'src/app/shared/doctor';
 import { Hospital } from 'src/app/shared/hospital';
 import { HospitalService } from 'src/app/services/hospital.service';
+import { AppointmentSlotService } from 'src/app/services/appointment-slot.service';
+import { AppointmentSlot } from 'src/app/shared/appointment-slot';
+import { Appointment } from 'src/app/shared/appointment';
+import { AppointmentService } from 'src/app/services/appointment.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-edit-appointment',
@@ -21,19 +26,21 @@ export class EditAppointmentComponent implements OnInit {
 
   appointmentForm = new FormGroup({
     id: new FormControl(''),
-    patient: new FormControl(''),
-    doctor: new FormControl(''),
+    patientId: new FormControl(''),
+    doctorId: new FormControl(''),
     appointmentType: new FormControl(''),
-    hospital: new FormControl(''),
+    hospitalId: new FormControl(''),
     date: new FormControl(''),
     time: new FormControl('')
   });
 
-  newAppointment = {}
+  newAppointment!: Appointment;
   patients!: Patient[];
   doctors!: Doctor[];
   hospitals!: Hospital[];
+  showHospital: boolean = true;
 
+  appointmentSlots!: AppointmentSlot[];
   filteredPatients!: Observable<Patient[]>;
 
   constructor(
@@ -42,7 +49,10 @@ export class EditAppointmentComponent implements OnInit {
     private snackBar: MatSnackBar,
     private patientService: PatientService,
     private doctorService: DoctorService,
-    private hospitalService: HospitalService
+    private hospitalService: HospitalService,
+    private appointmentSlotService: AppointmentSlotService,
+    private appointmentService: AppointmentService,
+    private notificationService: NotificationService
   ) { }
 
 
@@ -50,7 +60,7 @@ export class EditAppointmentComponent implements OnInit {
     this.patientService.getPatients().subscribe((data) => {
       this.patients = data;
 
-      this.filteredPatients = this.appointmentForm.controls["patient"].valueChanges.pipe(
+      this.filteredPatients = this.appointmentForm.controls["patientId"].valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value))
       );
@@ -64,26 +74,33 @@ export class EditAppointmentComponent implements OnInit {
   }
 
   private _filter(value: string): Patient[] {
-    console.log(value);
     const filterValue = value.toLowerCase();
     return this.patients.filter(patient => patient.lastName.toLowerCase().indexOf(filterValue) === 0
       || patient.firstName.toLowerCase().indexOf(filterValue) === 0);
   }
 
   onSubmit() {
-    this.newAppointment = this.appointmentForm.value;
-    // this.newPatient.dateOfBirth = this.getDate(this.newPatient.dateOfBirth);
-    // console.log("Added Patient", this.newPatient);
+    const data = this.appointmentForm.value;
+    this.newAppointment = {
+      id: 0,
+      patientId: data.patientId,
+      doctorId: data.doctorId,
+      hospitalId: data.hospitalId,
+      createdBy: "",
+      createdOn: this.getCurrentDate(),
+      isCancelled: false,
+      cancellationReason: "",
+      appointmentType: data.appointmentType,
+      appointmentTime: this.getDate(data.date, data.time)
+    }
 
-    // if (this.patientId == 0) {
-    //   this.patientService.addPatient(this.newPatient).subscribe(() => {
-    //     this.location.back();
-    //   });
-    // } else {
-    //   this.patientService.updatePatient(this.patientId, this.newPatient).subscribe(() => {
-    //     this.location.back();
-    //   })
-    // }
+    console.log("alex", this.newAppointment);
+
+    this.appointmentService.addAppointment(this.newAppointment).subscribe((newAppointment) => {
+      this.location.back();
+      this.snackBar.open("Appointment Created", "Ok", { duration: 2000 });
+      this.notificationService.sendAppointmentConfirmationSMS(newAppointment).subscribe();
+    });
   }
 
   onCancel() {
@@ -98,7 +115,63 @@ export class EditAppointmentComponent implements OnInit {
 
   onChange() {
     const selectedOption = this.appointmentForm.get("appointmentType")?.value;
-    console.log(selectedOption);
+    if (selectedOption == "Video") {
+      this.appointmentForm.controls["hospital"].setValue("");
+      this.showHospital = false;
+    }
+    else {
+      this.showHospital = true;
+    }
+  }
+
+  onDoctorSelected(doctorId: number) {
+    const date = this.appointmentForm.get("date")?.value;
+    if (date) {
+      this.getDoctorSlots(doctorId, this.getDate(date));
+    }
+  }
+
+  onDateSelected(date: string) {
+    const doctorId = parseInt(this.appointmentForm.get("doctorId")?.value);
+    if (doctorId) {
+      this.getDoctorSlots(doctorId, date);
+    }
+  }
+
+  getDoctorSlots(doctorId: number, date: string) {
+    if (doctorId && date) {
+      this.appointmentSlotService.getAppointmentSlotsByDoctor(doctorId, date).subscribe((data) => {
+        if (data.length !== 0)
+          this.appointmentSlots = data;
+        else {
+          this.appointmentSlots = [];
+          this.appointmentForm.controls["time"].setValue("");
+          this.snackBar.open("No slots available", "Ok", { duration: 2000 });
+        }
+      });
+    }
+  }
+
+  public getDate(dateString: string, timeString?: string) {
+    const { year, month, day } = this.getDateComponents(dateString);
+    return `${year}-${month}-${day}T${timeString || "00:00"}:00`;
+  }
+
+  public getCurrentDate() {
+    const { year, month, day, hour, minute, second } = this.getDateComponents();
+    return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
+  }
+
+  getDateComponents(input?: string) {
+    var date = input ? new Date(input) : new Date();
+    return {
+      day: ('0' + date.getDate()).slice(-2),
+      month: ('0' + (date.getMonth() + 1)).slice(-2),
+      year: date.getFullYear(),
+      hour: ('0' + date.getHours()).slice(-2),
+      minute: ('0' + date.getMinutes()).slice(-2),
+      second: ('0' + date.getSeconds()).slice(-2)
+    }
   }
 
 }

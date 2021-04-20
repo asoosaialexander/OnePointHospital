@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hospital_management_api.Data;
@@ -9,9 +10,10 @@ using hospital_management_api.Data;
 namespace hospital_management_api.Migrations
 {
     [DbContext(typeof(HospitalManagementContext))]
-    partial class HospitalManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20210418123016_col-contactnumber")]
+    partial class colcontactnumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,8 +228,8 @@ namespace hospital_management_api.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("ContactNumber")
-                        .HasColumnType("text");
+                    b.Property<long>("ContactNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("timestamp without time zone");

@@ -73,10 +73,36 @@ namespace hospital_management_api.Controllers
 
             return NoContent();
         }
+        
+        [HttpPut]
+        [Route("Cancel/{id}")]
+        public async Task<IActionResult> CancelAppointment(int id, string cancellationReason)
+        {
+            var appointment = _context.Appointment.Find(id);
+            appointment.IsCancelled = true;
+            appointment.CancellationReason = cancellationReason;
 
-        // POST: api/Appointments
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+            _context.Entry(appointment).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AppointmentExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+        
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {

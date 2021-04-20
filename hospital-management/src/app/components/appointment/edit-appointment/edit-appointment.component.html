@@ -17,14 +17,14 @@
             </mat-form-field> -->
             <mat-form-field appearance="fill">
                 <mat-label>Patient</mat-label>
-                <mat-select formControlName="patient" required>
+                <mat-select formControlName="patientId" required>
                     <mat-option *ngFor="let patient of patients" [value]="patient.id">
                         {{patient.firstName + " " + patient.lastName}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Doctor</mat-label>
-                <mat-select formControlName="doctor" required>
+                <mat-select #ref formControlName="doctorId" required (selectionChange)="onDoctorSelected(ref.value)">
                     <mat-option *ngFor="let doctor of doctors" [value]="doctor.id">
                         {{doctor.firstName + " " + doctor.lastName}}</mat-option>
                 </mat-select>
@@ -32,28 +32,29 @@
             <div class="rbGroup">
                 <div>Type: </div>
                 <mat-radio-group formControlName="appointmentType" (change)="onChange()">
-                    <mat-radio-button value="Physical">Physical</mat-radio-button>
+                    <mat-radio-button value="Physical" checked>Physical</mat-radio-button>
                     <mat-radio-button value="Video">Video Consultation</mat-radio-button>
                 </mat-radio-group>
             </div>
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" *ngIf="showHospital">
                 <mat-label>Appointment At</mat-label>
-                <mat-select formControlName="hospital" required>
+                <mat-select formControlName="hospitalId" required>
                     <mat-option *ngFor="let hospital of hospitals" [value]="hospital.id">
                         {{hospital.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Date</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="date" required>
+                <input matInput #ref2 [matDatepicker]="picker" formControlName="date" required
+                    (dateInput)="onDateSelected(ref2.value)">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Time</mat-label>
                 <mat-select formControlName="time" required>
-                    <mat-option *ngFor="let hospital of hospitals" [value]="hospital.id">
-                        {{hospital.name}}</mat-option>
+                    <mat-option *ngFor="let slot of appointmentSlots" [value]="slot.time">
+                        {{slot.time}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </form>

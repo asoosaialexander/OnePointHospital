@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hospital_management_api.Data;
@@ -9,9 +10,10 @@ using hospital_management_api.Data;
 namespace hospital_management_api.Migrations
 {
     [DbContext(typeof(HospitalManagementContext))]
-    partial class HospitalManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20210418124517_col-contactnumber2")]
+    partial class colcontactnumber2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

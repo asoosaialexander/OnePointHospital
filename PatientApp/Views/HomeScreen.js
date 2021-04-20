@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import {
   Avatar,
   Header,
@@ -9,35 +9,39 @@ import {
   ListItem,
 } from 'react-native-elements';
 import { getInitials } from '../shared/common';
-
-const list = [
-  {
-    name: 'Dr. Rajesh',
-    avatar_url:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: 'Pediatrician',
-  },
-  {
-    name: 'Dr. Sadique Basha',
-    avatar_url:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Pediatrician',
-  },
-];
+import axios from 'axios';
 
 class HomeScreen extends React.Component {
   state = {
     search: '',
+    list: [],
+    filteredList: []
   };
+
+  componentDidMount() {
+    axios.get('http://192.168.0.12:5000/api/doctors').then(res => {
+      this.setState({ list: res.data, filteredList: res.data })
+    }).catch(err => {
+      console.log(JSON.stringify(err));
+    });
+  }
 
   updateSearch = search => {
-    this.setState({search});
+    this.setState({ search });
+    if (search) {
+      const data = this.state.list.filter(l => {
+        return (l.firstName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+          l.lastName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+          l.speciality.toLowerCase().indexOf(search.toLowerCase()) > -1);
+      });
+      this.setState({ filteredList: data });
+    } else {
+      this.setState({ filteredList: this.state.list });
+    }
   };
 
-  
-
   render() {
-    const {search} = this.state;
+    const { search, filteredList } = this.state;
 
     return (
       <>
@@ -49,10 +53,10 @@ class HomeScreen extends React.Component {
               onPress={() => this.props.navigation.toggleDrawer()}
             />
           }
-          centerComponent={{text: 'Patient Log', style: {color: '#fff'}}}
-          rightComponent={{icon: 'home', color: '#fff'}}
+          centerComponent={{ text: 'Patient Log', style: { color: '#fff' } }}
+          rightComponent={{ icon: 'home', color: '#fff' }}
         />
-        <View style={{margin: 5}}>
+        <View style={{ margin: 5 }}>
           <Text h3>Find Your Doctor</Text>
           <Text h6>Book and appointment for consulation</Text>
           <SearchBar
@@ -63,21 +67,21 @@ class HomeScreen extends React.Component {
           />
         </View>
         {search != '' && (
-          <View style={{padding: 3, paddingLeft: 20}}>
+          <View style={{ padding: 3, paddingLeft: 20 }}>
             <Text>Search results for {search}</Text>
           </View>
         )}
         <View>
-          {list.map((l, i) => (
+          {filteredList.map((l, i) => (
             <ListItem key={i} bottomDivider>
               <Avatar
                 rounded
-                title={getInitials(l.name)}
-                source={{uri: l.avatar_url}}
+                title={getInitials(`${l.firstName} ${l.lastName}`)}
+                source={{ uri: 'https://urlsource/' }}
               />
               <ListItem.Content>
-                <ListItem.Title>{l.name}</ListItem.Title>
-                <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
+                <ListItem.Title>{l.firstName} {l.lastName}</ListItem.Title>
+                <ListItem.Subtitle>{l.speciality}</ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>
           ))}

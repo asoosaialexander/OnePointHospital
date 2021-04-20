@@ -92,8 +92,6 @@ namespace hospital_management_api
 
             app.UseCors(MyAllowSpecificOrigins);
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();

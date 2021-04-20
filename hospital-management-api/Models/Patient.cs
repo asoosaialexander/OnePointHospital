@@ -9,5 +9,6 @@ namespace hospital_management_api.Models
         public string LastName { get; set; }
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string ContactNumber { get; set; }
     }
 }
