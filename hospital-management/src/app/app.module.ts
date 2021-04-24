@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +16,9 @@ import { EditAppointmentComponent } from './components/appointment/edit-appointm
 import { ViewPatientComponent } from './components/patient/view-patient/view-patient.component';
 import { AddPatientComponent } from './components/patient/add-patient/add-patient.component';
 import { PatientFormDialogComponent } from './components/patient/patient-form-dialog/patient-form-dialog.component';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { initializeKeycloak } from './../utils/initializeKeycloak';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { PatientFormDialogComponent } from './components/patient/patient-form-di
     EditAppointmentComponent,
     ViewPatientComponent,
     AddPatientComponent,
-    PatientFormDialogComponent
+    PatientFormDialogComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -39,9 +42,15 @@ import { PatientFormDialogComponent } from './components/patient/patient-form-di
     MaterialModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    KeycloakAngularModule,
   ],
-  providers: [],
+  providers: [{
+    provide: APP_INITIALIZER,
+    useFactory: initializeKeycloak,
+    multi: true,
+    deps: [KeycloakService],
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

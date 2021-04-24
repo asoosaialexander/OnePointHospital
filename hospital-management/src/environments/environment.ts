@@ -4,7 +4,18 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.0.12:5000/api/'
+  apiUrl: 'http://192.168.0.12:5000/api/',
+  keycloak: {
+    // Url of the Identity Provider
+    issuer: 'http://localhost:8080/auth/',
+
+    // Realm
+    realm: 'OnePointHospital',
+
+    // The SPA's id. 
+    // The SPA is registerd with this id at the auth-serverß
+    clientId: 'hospital-management',
+  }
 };
 
 /*
