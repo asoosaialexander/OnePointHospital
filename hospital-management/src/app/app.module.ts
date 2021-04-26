@@ -19,6 +19,8 @@ import { PatientFormDialogComponent } from './components/patient/patient-form-di
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { initializeKeycloak } from './../utils/initializeKeycloak';
 import { LogoutComponent } from './logout/logout.component';
+import { HomeComponent } from './home/home.component';
+import { ViewAppointmentComponent } from './components/appointment/view-appointment/view-appointment.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { LogoutComponent } from './logout/logout.component';
     ViewPatientComponent,
     AddPatientComponent,
     PatientFormDialogComponent,
-    LogoutComponent
+    LogoutComponent,
+    HomeComponent,
+    ViewAppointmentComponent
   ],
   imports: [
     BrowserModule,

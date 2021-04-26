@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
+import { Role } from './shared/role';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Hospital Management';
+  isAdmin: boolean;
+  isDoctor: boolean;
+
+  constructor(private keycloak: KeycloakService) {
+    this.isAdmin = keycloak.isUserInRole(Role.Admin);
+    this.isDoctor = keycloak.isUserInRole(Role.Doctor);
+  }
 }

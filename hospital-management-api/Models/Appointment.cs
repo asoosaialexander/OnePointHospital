@@ -12,7 +12,6 @@ namespace hospital_management_api.Models
         public int HospitalId { get; set; }
         public DateTime AppointmentTime { get; set; }
         public string AppointmentType { get; set; }
-        public bool IsCancelled { get; set; }
-        public string CancellationReason { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -28,6 +28,137 @@ namespace hospital_management_api.Controllers
             return await _context.Appointment.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("past")]
+        public ActionResult<IEnumerable<AppointmentDetails>> PastAppointments(int patientId = 0)
+        {
+            var today = DateTime.Now;
+            var appointments = _context.Appointment
+                .Where(a => a.AppointmentTime.Date < today.Date).ToList();
+
+            if (patientId != 0)
+            {
+                appointments = appointments.Where(a => a.PatientId == patientId).ToList();
+            }
+
+            var details = new List<AppointmentDetails>();
+            foreach (var appointment in appointments)
+            {
+                var doctor = _context.Doctor.Find(appointment.DoctorId);
+                var patient = _context.Patient.Find(appointment.PatientId);
+                var location = "Virtual";
+
+                if (appointment.HospitalId != 0)
+                {
+                    location = _context.Hospital.Find(appointment.HospitalId).Name;
+                }
+
+                var detail = new AppointmentDetails()
+                {
+                    Id = appointment.Id,
+                    DoctorName = string.Format("Dr. {0} {1}", doctor.FirstName, doctor.LastName),
+                    DoctorSpeciality = doctor.Speciality,
+                    ConsultationFee = doctor.ConsultationFee,
+                    PatientName = string.Format("{0} {1}", patient.FirstName, patient.LastName),
+                    AppointmentType = appointment.AppointmentType,
+                    Location = location,
+                    Status = appointment.Status,
+                    Date = appointment.AppointmentTime
+                };
+
+                details.Add(detail);
+            }
+
+            return Ok(details);
+        }
+
+        [HttpGet]
+        [Route("today")]
+        public ActionResult<IEnumerable<AppointmentDetails>> TodayAppointments(int doctorId = 0)
+        {
+            var today = DateTime.Now;
+            var appointments = _context.Appointment
+                .Where(a => a.AppointmentTime.Date == today.Date).ToList();
+
+            if (doctorId != 0)
+            {
+                appointments = appointments.Where(a => a.DoctorId == doctorId).ToList();
+            }
+
+            var details = new List<AppointmentDetails>();
+            foreach (var appointment in appointments)
+            {
+                var doctor = _context.Doctor.Find(appointment.DoctorId);
+                var patient = _context.Patient.Find(appointment.PatientId);
+                var location = "Virtual";
+
+                if (appointment.HospitalId != 0)
+                {
+                    location = _context.Hospital.Find(appointment.HospitalId).Name;
+                }
+
+                var detail = new AppointmentDetails()
+                {
+                    Id = appointment.Id,
+                    DoctorName = string.Format("Dr. {0} {1}", doctor.FirstName, doctor.LastName),
+                    PatientName = string.Format("{0} {1}", patient.FirstName, patient.LastName),
+                    AppointmentType = appointment.AppointmentType,
+                    Location = location,
+                    Status = appointment.Status,
+                    Date = appointment.AppointmentTime
+                };
+
+                details.Add(detail);
+            }
+
+            return Ok(details);
+        }
+
+        [HttpGet]
+        [Route("thisWeek")]
+        public ActionResult<IEnumerable<AppointmentDetails>> WeekAppointments(int doctorId = 0)
+        {
+            var today = DateTime.Now;
+            var dayOfWeek = (int)today.DayOfWeek;
+
+            var appointments = _context.Appointment
+                .Where(a => a.AppointmentTime.Date >= today.Date.AddDays(-dayOfWeek) &&
+                a.AppointmentTime.Date <= today.Date.AddDays(7 - dayOfWeek)).ToList();
+
+            if (doctorId != 0)
+            {
+                appointments = appointments.Where(a => a.DoctorId == doctorId).ToList();
+            }
+
+            var details = new List<AppointmentDetails>();
+            foreach (var appointment in appointments)
+            {
+                var doctor = _context.Doctor.Find(appointment.DoctorId);
+                var patient = _context.Patient.Find(appointment.PatientId);
+                var location = "Virtual";
+
+                if (appointment.HospitalId != 0)
+                {
+                    location = _context.Hospital.Find(appointment.HospitalId).Name;
+                }
+
+                var detail = new AppointmentDetails()
+                {
+                    Id = appointment.Id,
+                    DoctorName = string.Format("Dr. {0} {1}", doctor.FirstName, doctor.LastName),
+                    PatientName = string.Format("{0} {1}", patient.FirstName, patient.LastName),
+                    AppointmentType = appointment.AppointmentType,
+                    Location = location,
+                    Status = appointment.Status,
+                    Date = appointment.AppointmentTime
+                };
+
+                details.Add(detail);
+            }
+
+            return Ok(details);
+        }
+
         // GET: api/Appointments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(int id)
@@ -41,6 +172,7 @@ namespace hospital_management_api.Controllers
 
             return appointment;
         }
+
 
         // PUT: api/Appointments/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -73,14 +205,13 @@ namespace hospital_management_api.Controllers
 
             return NoContent();
         }
-        
+
         [HttpPut]
-        [Route("Cancel/{id}")]
-        public async Task<IActionResult> CancelAppointment(int id, string cancellationReason)
+        [Route("updateStatus/{id}")]
+        public async Task<IActionResult> CancelAppointment(int id, string status)
         {
             var appointment = _context.Appointment.Find(id);
-            appointment.IsCancelled = true;
-            appointment.CancellationReason = cancellationReason;
+            appointment.Status = status;
 
             _context.Entry(appointment).State = EntityState.Modified;
 
@@ -102,10 +233,11 @@ namespace hospital_management_api.Controllers
 
             return NoContent();
         }
-        
+
         [HttpPost]
         public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
         {
+            appointment.Status = "Scheduled";
             _context.Appointment.Add(appointment);
             await _context.SaveChangesAsync();
 

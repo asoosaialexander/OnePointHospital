@@ -101,7 +101,7 @@ class AppointmentSummaryScreen extends React.Component {
               <Text style={{fontWeight: 'bold'}}>APR 11 | SUN | 08:20 PM</Text>
             </View>
             <View>
-              <Button type="clear" title="Change date" />
+              <Button type="clear" title="Change date" onPress={()=>this.props.navigation.navigate("Book an Appointment")} />
             </View>
           </View>
         </View>

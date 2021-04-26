@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
-import HomeScreen from './views/HomeScreen';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, { useState, useEffect } from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppointmentScreen from './views/appointments/Appointment';
 import RecordScreen from './views/records/Records';
@@ -13,12 +12,14 @@ import RecordsScreen from './views/records/Records';
 import MedicineScreen from './views/medicine/Medicine';
 import LoginScreen from './views/Login';
 import VerifyScreen from './views/Verify';
+import AsyncStorage from '@react-native-community/async-storage';
+import HomeNavigationScreen from './views/HomeNavigation';
 
 function MyTabs() {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           switch (route.name) {
@@ -59,6 +60,15 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [isSignedIn, toggleSignedIn] = useState(false);
 
+  useEffect(() => {
+    AsyncStorage.getItem("userToken").then(value => {
+      console.log("User Token Exists");
+      if(value){
+        toggleSignedIn(false);
+      }
+    });
+  }, []);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
@@ -66,7 +76,7 @@ export default function App() {
           {isSignedIn ? (
             <>
               <Drawer.Screen name="Home" component={MyTabs} />
-              <Drawer.Screen name="Get Appointment" component={HomeScreen} />
+              <Drawer.Screen name="Get Appointment" component={HomeNavigationScreen} />
               <Drawer.Screen
                 name="Past Appointments"
                 component={AppointmentScreen}

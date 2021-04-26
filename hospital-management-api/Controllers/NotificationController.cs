@@ -72,13 +72,13 @@ namespace hospital_management_api.Controllers
 
         [HttpPost]
         [Route("sentOTP")]
-        public IActionResult sentOTP(string phoneNumber)
+        public IActionResult sentOTP(string mobileNumber)
         {
             TwilioClient.Init(AccountSid, AuthToken);
             try
             {
                 var verification = VerificationResource.Create(
-                    to: phoneNumber,
+                    to: mobileNumber,
                     channel: "sms",
                     pathServiceSid: VerificationSid
                 );
@@ -93,14 +93,14 @@ namespace hospital_management_api.Controllers
 
         [HttpPost]
         [Route("verifyOTP")]
-        public IActionResult VerifyOTP(string phoneNumber, string code)
+        public IActionResult VerifyOTP(string mobileNumber, string code)
         {
             TwilioClient.Init(AccountSid, AuthToken);
 
             try
             {
                 var verificationCheck = VerificationCheckResource.Create(
-                    to: phoneNumber,
+                    to: mobileNumber,
                     code: code,
                     pathServiceSid: VerificationSid
                 );

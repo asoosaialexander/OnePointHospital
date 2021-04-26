@@ -9,7 +9,6 @@ export function initializeKeycloak(keycloak: KeycloakService) {
         realm: environment.keycloak.realm,
         clientId: environment.keycloak.clientId
       },
-      loadUserProfileAtStartUp: false,
       initOptions: {
         onLoad: 'login-required',
         checkLoginIframe: true

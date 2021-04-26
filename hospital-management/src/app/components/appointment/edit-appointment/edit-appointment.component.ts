@@ -57,6 +57,10 @@ export class EditAppointmentComponent implements OnInit {
 
 
   ngOnInit() {
+
+    const appointmentId = parseInt(this.route.snapshot.paramMap.get('id') || "0");
+    console.log(appointmentId);
+
     this.patientService.getPatients().subscribe((data) => {
       this.patients = data;
 
@@ -116,7 +120,7 @@ export class EditAppointmentComponent implements OnInit {
   onChange() {
     const selectedOption = this.appointmentForm.get("appointmentType")?.value;
     if (selectedOption == "Video") {
-      this.appointmentForm.controls["hospital"].setValue("");
+      this.appointmentForm.controls["hospitalId"].setValue(0);
       this.showHospital = false;
     }
     else {
