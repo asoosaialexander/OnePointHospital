@@ -13,12 +13,12 @@ import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 })
 export class LookupListsComponent implements OnInit {
 
-  displayedColumns: string[] = ["value", "actions"];
+  displayedColumns: string[] = ['value', 'actions'];
   lookupTypeData: LookupType[] = [];
   dataSource: MatTableDataSource<Lookup>;
-  selectedId: number = 0;
-  title: string = "";
-  newEntry: Lookup = { id: 0, value: "", typeId: 0 };
+  selectedId = 0;
+  title = '';
+  newEntry: Lookup = { id: 0, value: '', typeId: 0 };
 
   constructor(
     private lookupService: LookupService,
@@ -32,7 +32,7 @@ export class LookupListsComponent implements OnInit {
     this.getLookupTypes();
   }
 
-  getLookupTypes() {
+  getLookupTypes(): void {
     this.lookupService.getLookupTypes().subscribe(
       data => {
         this.lookupTypeData = data;
@@ -40,17 +40,17 @@ export class LookupListsComponent implements OnInit {
     );
   }
 
-  getLookupData(typeId: number) {
+  getLookupData(typeId: number): void {
     this.lookupService.getLookupById(typeId).subscribe(
       data => this.dataSource.data = data
     );
   }
 
-  onLookupTypeChange(id: number) {
-    var selected = this.lookupTypeData.map(item => {
-      if (item.id == id) {
+  onLookupTypeChange(id: number): void {
+    const selected = this.lookupTypeData.map(item => {
+      if (item.id === id) {
         this.selectedId = item.id;
-        this.title = item.name
+        this.title = item.name;
       }
     });
 
@@ -64,7 +64,7 @@ export class LookupListsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
+      if (result !== undefined) {
         this.lookupService.addLookupEntry(result).subscribe(() => {
           this.getLookupData(this.selectedId);
         });
@@ -79,7 +79,7 @@ export class LookupListsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
+      if (result !== undefined) {
         this.lookupService.updateLookupEntry(result).subscribe();
       }
     });
@@ -88,13 +88,13 @@ export class LookupListsComponent implements OnInit {
   deleteEntry(entry: Lookup): void {
     this.lookupService.deleteEntry(entry.id).subscribe(() => {
       this.getLookupData(this.selectedId);
-      this.openSnackBar("Deleted successfully")
+      this.openSnackBar('Deleted successfully');
     });
 
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, "Ok", {
+  openSnackBar(message: string): void {
+    this.snackBar.open(message, 'Ok', {
       duration: 2000,
     });
   }

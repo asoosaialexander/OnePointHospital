@@ -13,11 +13,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ViewAppointmentComponent implements OnInit {
 
-  displayedColumns: string[] = ["date", "name", "type", "location", "with", "status", "actions"];
+  displayedColumns: string[] = ['date', 'name', 'type', 'location', 'with', 'status', 'actions'];
   dataSource!: MatTableDataSource<AppointmentDetails>;
 
   constructor(
-    private _service: AppointmentDetailsService,
+    private appointmentDetailsService: AppointmentDetailsService,
     private location: Location,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar) {
@@ -26,29 +26,29 @@ export class ViewAppointmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var frequency = this.route.snapshot.paramMap.get('frequency') || "";
+    const frequency = this.route.snapshot.paramMap.get('frequency') || '';
     console.log(frequency);
 
     switch (frequency) {
-      case "day":
-        this._service.getTodayAppointments().subscribe(data => {
+      case 'day':
+        this.appointmentDetailsService.getTodayAppointments().subscribe(data => {
           this.dataSource.data = data;
         });
         break;
-      case "week":
-        this._service.getWeekAppointments().subscribe(data => {
+      case 'week':
+        this.appointmentDetailsService.getWeekAppointments().subscribe(data => {
           this.dataSource.data = data;
         });
         break;
       default:
-        this._service.getTodayAppointments().subscribe(data => {
+        this.appointmentDetailsService.getTodayAppointments().subscribe(data => {
           this.dataSource.data = data;
         });
     }
 
   }
 
-  delete(appointment: AppointmentDetails) {
+  delete(appointment: AppointmentDetails): void {
 
   }
 }

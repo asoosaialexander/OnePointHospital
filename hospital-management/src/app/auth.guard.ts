@@ -17,6 +17,7 @@ export class AuthGuard extends KeycloakAuthGuard {
     super(router, keycloak);
   }
 
+  /* tslint:disable:typedef */
   public async isAccessAllowed(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

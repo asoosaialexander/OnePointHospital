@@ -19,18 +19,18 @@ export class DynamicFormComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.selectedForm) {
       this.form = this.toFormGroup(this.selectedForm.fields);
       this.showForm = true;
     }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.payLoad = JSON.stringify(this.form.getRawValue());
   }
 
-  toFormGroup(questions: QuestionBase[]) {
+  toFormGroup(questions: QuestionBase[]): FormGroup {
     const group: any = {};
 
     questions.forEach(question => {

@@ -10,7 +10,7 @@ import { CustomForm } from 'src/app/shared/custom-form';
 })
 export class ViewCustomFormComponent implements OnInit {
 
-  displayedColumns: string[] = ["name", "type", "actions"];
+  displayedColumns: string[] = ['name', 'type', 'actions'];
   dataSource!: MatTableDataSource<CustomForm>;
 
   constructor(private customFormService: CustomFormService) {
@@ -21,13 +21,13 @@ export class ViewCustomFormComponent implements OnInit {
     this.getForms();
   }
 
-  getForms() {
+  getForms(): void {
     this.customFormService.getCustomForm().subscribe((data) => {
       this.dataSource.data = data;
-    })
+    });
   }
 
-  deleteForm(form: CustomForm) {
+  deleteForm(form: CustomForm): void {
     this.customFormService.deleteCustomForm(form.id).subscribe(() => {
       this.getForms();
     });

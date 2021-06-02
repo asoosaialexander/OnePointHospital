@@ -11,12 +11,12 @@ export class LogoutComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute,
-    private router: Router, private keycloakService: KeycloakService) { }
+              private router: Router, private keycloakService: KeycloakService) { }
 
   ngOnInit(): void {
   }
 
-  logout() {
+  logout(): void {
     this.keycloakService.logout();
   }
 

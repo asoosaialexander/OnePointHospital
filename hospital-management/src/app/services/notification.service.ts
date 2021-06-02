@@ -13,7 +13,7 @@ export class NotificationService {
 
   constructor(private http: HttpClient) { }
 
-  sendAppointmentConfirmationSMS(appointment:Appointment): Observable<{}> {
+  sendAppointmentConfirmationSMS(appointment: Appointment): Observable<{}> {
     return this.http.post(this.url, appointment);
   }
 }

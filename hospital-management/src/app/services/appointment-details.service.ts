@@ -14,10 +14,10 @@ export class AppointmentDetailsService {
     constructor(private http: HttpClient) { }
 
     getTodayAppointments(): Observable<AppointmentDetails[]> {
-        return this.http.get<AppointmentDetails[]>(this.url + "today");
+        return this.http.get<AppointmentDetails[]>(this.url + 'today');
     }
 
     getWeekAppointments(): Observable<AppointmentDetails[]> {
-        return this.http.get<AppointmentDetails[]>(this.url + "thisWeek");
+        return this.http.get<AppointmentDetails[]>(this.url + 'thisWeek');
     }
 }

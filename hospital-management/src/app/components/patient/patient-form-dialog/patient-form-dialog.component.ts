@@ -17,8 +17,8 @@ export class PatientFormDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: CustomForm[],
     private customFormService: CustomFormService) {
 
-    this.customFormService.getCustomForm().subscribe((data) => {
-      this.listSource = data;
+    this.customFormService.getCustomForm().subscribe((formData) => {
+      this.listSource = formData;
     });
   }
 

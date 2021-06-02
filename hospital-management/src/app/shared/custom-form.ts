@@ -1,4 +1,4 @@
-import { QuestionBase } from "./question-base";
+import { QuestionBase } from './question-base';
 
 export class CustomForm {
   id: string;
@@ -9,7 +9,7 @@ export class CustomForm {
   fields: QuestionBase[];
   active: boolean;
   constructor() {
-    this.id = this.name = this.type = "";
+    this.id = this.name = this.type = '';
     this.columns = 0;
     this.alwaysInclude = this.active = false;
     this.fields = [];

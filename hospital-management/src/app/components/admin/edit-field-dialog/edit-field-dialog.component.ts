@@ -11,7 +11,7 @@ import { FieldOption, QuestionBase } from 'src/app/shared/question-base';
 export class EditFieldDialogComponent implements OnInit {
 
   dataSource!: MatTableDataSource<FieldOption>;
-  displayedColumns: string[] = ["value", "actions"];
+  displayedColumns: string[] = ['value', 'actions'];
 
   constructor(
     public dialogRef: MatDialogRef<EditFieldDialogComponent>,
@@ -24,17 +24,17 @@ export class EditFieldDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addValue() {
-    var data = this.dataSource.data;
+  addValue(): void {
+    const data = this.dataSource.data;
     data.push(new FieldOption());
     this.dataSource.data = data;
   }
 
-  deleteValue(value: string) {
-    var data = this.dataSource.data;
+  deleteValue(value: string): void {
+    const data = this.dataSource.data;
     let index = 0;
     data.forEach((item, i) => {
-      if (item.value == value) {
+      if (item.value === value) {
         index = i;
       }
     });
@@ -47,12 +47,12 @@ export class EditFieldDialogComponent implements OnInit {
   }
 
   onOk(): void {
-    if (this.data.key == "") {
+    if (this.data.key === '') {
       this.data.key = this.data.label;
     }
     this.data.options = this.dataSource.data;
     this.data.options.forEach(option => {
-      option.key = option.value
+      option.key = option.value;
     });
   }
 

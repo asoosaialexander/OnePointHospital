@@ -11,7 +11,7 @@ import { Patient } from 'src/app/shared/patient';
 })
 export class ViewPatientComponent implements OnInit {
 
-  displayedColumns: string[] = ["id", "name", "gender", "actions"];
+  displayedColumns: string[] = ['id', 'name', 'gender', 'actions'];
   dataSource!: MatTableDataSource<Patient>;
 
   constructor(private patientService: PatientService) {
@@ -22,14 +22,14 @@ export class ViewPatientComponent implements OnInit {
     this.getPatients();
   }
 
-  getPatients() {
+  getPatients(): void {
     this.patientService.getPatients().subscribe((data) => {
       this.dataSource.data = data;
-    })
+    });
   }
 
-  delete(entry: Patient) {
-    this.patientService.deletePatient(entry.id).subscribe(()=>{
+  delete(entry: Patient): void {
+    this.patientService.deletePatient(entry.id).subscribe(() => {
       this.getPatients();
     });
   }
