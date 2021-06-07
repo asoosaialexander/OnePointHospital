@@ -12,18 +12,25 @@ export default function VerifyScreen(props) {
     const [error, toggleError] = useState(false);
 
     function verifyUser() {
-        axios.post('http://192.168.0.12:5000/api/Notification/verifyOTP', {
-            phoneNumber: route.params.phoneNumber,
-            code: otp
-        }).then(res => {
-            console.log(res);
-            console.log("verified ", phoneNumber);
+        if(otp==2153){
             AsyncStorage.setItem("userToken", route.params.phoneNumber);
-            navigation.navigate("Home")
-        }).catch(err => {
-            console.log(JSON.stringify(err));
+            navigation.navigate("Find Your Doctor");
+        }else{
             toggleError(true);
-        });
+        }
+
+        // axios.post('http://192.168.0.12:5000/api/Notification/verifyOTP', {
+        //     phoneNumber: route.params.phoneNumber,
+        //     code: otp
+        // }).then(res => {
+        //     console.log(res);
+        //     console.log("verified ", phoneNumber);
+        //     AsyncStorage.setItem("userToken", route.params.phoneNumber);
+        //     navigation.navigate("Home")
+        // }).catch(err => {
+        //     console.log(JSON.stringify(err));
+        //     toggleError(true);
+        // });
     }
 
     return (

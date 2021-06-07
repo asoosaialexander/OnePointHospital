@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { LookupService } from 'src/app/services/lookup.service';
@@ -11,12 +11,15 @@ describe('LookupListsComponent', () => {
     let component: LookupListsComponent;
     let fixture: ComponentFixture<LookupListsComponent>;
     let lookupService: any;
+    let matSnakBarSpy: { open: jasmine.Spy };
 
     beforeEach(() => {
 
         lookupService = jasmine.createSpyObj(LookupService.name, [
-            'getLookupTypes', 'getLookupById', 'addLookupEntry','deleteEntry'
+            'getLookupTypes', 'getLookupById', 'addLookupEntry', 'deleteEntry'
         ]);
+
+        matSnakBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
 
         const getLookupTypes = lookupService.getLookupTypes.and.returnValue(of([]));
         const getLookupById = lookupService.getLookupById.and.returnValue(of({}));
@@ -28,11 +31,13 @@ describe('LookupListsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MatDialogModule,
-                MatSnackBarModule,
                 BrowserAnimationsModule
             ],
             declarations: [LookupListsComponent],
-            providers: [{ provide: LookupService, useValue: lookupService }]
+            providers: [
+                { provide: LookupService, useValue: lookupService },
+                { provide: MatSnackBar, useValue: matSnakBarSpy }
+            ]
         }).compileComponents();
 
 

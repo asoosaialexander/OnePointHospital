@@ -21,6 +21,8 @@ import { initializeKeycloak } from './../utils/initializeKeycloak';
 import { LogoutComponent } from './logout/logout.component';
 import { HomeComponent } from './home/home.component';
 import { ViewAppointmentComponent } from './components/appointment/view-appointment/view-appointment.component';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,11 @@ import { ViewAppointmentComponent } from './components/appointment/view-appointm
     HttpClientModule,
     ReactiveFormsModule,
     KeycloakAngularModule,
+    LoggerModule.forRoot({
+      level: NgxLoggerLevel.DEBUG,
+      serverLoggingUrl: environment.apiUrl + "logs/",
+      serverLogLevel: NgxLoggerLevel.DEBUG,
+    }),
   ],
   providers: [{
     provide: APP_INITIALIZER,

@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { LookupService } from 'src/app/services/lookup.service';
 import { Lookup, LookupType } from 'src/app/shared/lookup';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-lookup-lists',
@@ -23,7 +24,8 @@ export class LookupListsComponent implements OnInit {
   constructor(
     private lookupService: LookupService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private logger: NGXLogger
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -90,7 +92,7 @@ export class LookupListsComponent implements OnInit {
       this.getLookupData(this.selectedId);
       this.openSnackBar('Deleted successfully');
     });
-
+    this.logger.info(`${entry.value} is deleted from list`);
   }
 
   openSnackBar(message: string): void {

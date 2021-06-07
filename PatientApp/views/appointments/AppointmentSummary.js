@@ -164,7 +164,7 @@ class AppointmentSummaryScreen extends React.Component {
               onChangeText={value => this.setState({name: value})}
             />
             <Input
-              placeholder="First Name"
+              placeholder="Last Name"
               onChangeText={value => this.setState({name: value})}
             />
             <Input

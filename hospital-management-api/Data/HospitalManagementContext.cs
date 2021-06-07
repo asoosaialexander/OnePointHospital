@@ -19,6 +19,6 @@ namespace hospital_management_api.Data
         public DbSet<Appointment> Appointment { get; set; }
         public DbSet<AppointmentSlot> AppointmentSlot { get; set; }
         public DbSet<AppointmentSlotCancelled> AppointmentSlotCancelled { get; set; }
-
+        public DbSet<NGXLogInterface> Log { get; set; }
     }
 }

@@ -12,17 +12,24 @@ function LoginScreen(props) {
     }
 
     function register() {
-        axios.post('http://192.168.0.12:5000/api/Notification/sentOTP', data)
-            .then(res => {
-                console.log(res);
-                console.log("OTP send to ", phoneNumber);
-                navigation.navigate({
-                    name: "Verify",
-                    params: { phoneNumber }
-                })
-            }).catch(err => {
-                console.log(JSON.stringify(err));
-            });
+
+        
+        navigation.navigate({
+            name: "Verify",
+            params: { phoneNumber }
+        })
+
+        // axios.post('http://192.168.0.12:5000/api/Notification/sentOTP', data)
+        //     .then(res => {
+        //         console.log(res);
+        //         console.log("OTP send to ", phoneNumber);
+        //         navigation.navigate({
+        //             name: "Verify",
+        //             params: { phoneNumber }
+        //         })
+        //     }).catch(err => {
+        //         console.log(JSON.stringify(err));
+        //     });
 
         // fetch("http://192.168.0.12:5000/api/Notification/sentOTP", {
         //     method: "POST",
